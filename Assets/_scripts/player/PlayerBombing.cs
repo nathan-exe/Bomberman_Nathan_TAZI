@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBombing : MonoBehaviour
+public class BombBag : MonoBehaviour
 {
 
     BombItem bombItem = null;
@@ -14,10 +14,19 @@ public class PlayerBombing : MonoBehaviour
         bombItem = bomb;
     }
 
+    public void TryToUseBomb()
+    {
+        if(bombItem != null)
+        {
+            useBomb();
+        }
+    }
+
     public void useBomb()
     {
         //pull bomb from pool
-        FindObjectOfType<Pool>().PullObjectFromPool(); //@extdrcfygvubhinjo,kp;lzr^qesgr:hdfmcbvxjopihulgykfhvihbjl,
+        PoolReferences.Instance.BombPool.PullObjectFromPool(((Vector2)transform.position).Round()); //@extdrcfygvubhinjo,kp;lzr^qesgr:hdfmcbvxjopihulgykfhvihbjl,
+        bombItem.Respawn();
         bombItem = null;
     }
 }

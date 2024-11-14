@@ -11,6 +11,8 @@ public class GraphBuilder : MonoBehaviour
     [SerializeField] Vector2Int _size = new Vector2Int(10, 10);
     [SerializeField] Vector2Int _offset = new Vector2Int(10, 10);
     [SerializeField] Graph _graph;
+
+    const string solidLayer = "Solid";
     public void BuildGraph()
     {
         _graph.Nodes.Clear();
@@ -27,7 +29,7 @@ public class GraphBuilder : MonoBehaviour
         {
             for (int y= _offset.y; y < _size.y+ _offset.y; y++)
             {
-                bool collision = Physics2D.OverlapPoint(new Vector2(x, y)); //le node sera desactivé si il y'avait un objet sur la case avant qu'il ne spawn
+                bool collision = Physics2D.OverlapPoint(new Vector2(x, y), LayerMask.GetMask(solidLayer)); //le node sera desactivé si il y'avait un objet sur la case avant qu'il ne spawn
 
                 Debug.DrawRay(new Vector2(x, y), Vector2.up * 0.2f, Color.red, 1);
                 Node newNode = Instantiate(_graph.NodePrefab, new Vector2(x, y), Quaternion.identity, transform);

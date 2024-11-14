@@ -15,8 +15,10 @@ public class Astar : MonoBehaviour
         _nodes = _graph.GetComponentsInChildren<Node>();
     }
 
-    public async Task< Stack<Node> >ComputePath(Node from, Node to)
+    public  Stack<Node> ComputePath(Node from, Node to)
     {
+        if(from == to) return new Stack<Node>();
+
         ResetNodes();
         List<Node> _openNodes = new();
         //parcourt le premuier noeud
@@ -24,7 +26,6 @@ public class Astar : MonoBehaviour
         //tant que la cible n'est pas trouvée
         while (!_openNodes.Contains(to) && _openNodes.Count>0)
         {
-            await Task.Delay(20);
             //trouve le voisin le plus proche
             Node best = _openNodes[0];
             foreach (Node node in _openNodes)

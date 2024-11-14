@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bomb : MonoBehaviour
+public class Bomb : MonoBehaviour
 {
     [SerializeField] GameObject _explosionVisual;
 
@@ -18,7 +18,6 @@ public class bomb : MonoBehaviour
     public void OnPulledFromPool()
     {
         _explosionVisual.SetActive(false);
-
         StartCoroutine(ExplodeWithDelay());
     }
 
@@ -35,22 +34,18 @@ public class bomb : MonoBehaviour
         GetComponent<PooledObject>().GoBackIntoPool();
     }
 
-
+    /// <summary>
+    /// dit aux objets autour de la bombe de réagir à l'explosion si ils sont gentils
+    /// </summary>
     void SendHitMessagesToSurroundingObjects()
     {
         Collider2D[] col = new Collider2D[1];
+        foreach (Vector2Int offset in new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left })
+        {
 
-        Vector2 pose = (Vector2)transform.position + Vector2.up;
-        if (Physics2D.OverlapPointNonAlloc(pose, col) > 0) col[0].gameObject.SendMessage(_explosionMessage);
+            Vector2 pose = (Vector2)transform.position + offset;
+        if (Physics2D.OverlapPointNonAlloc(pose, col, ~LayerMask.GetMask(Graph.NodeLayer)) > 0) col[0].gameObject.SendMessage(_explosionMessage, SendMessageOptions.DontRequireReceiver);
 
-        pose = (Vector2)transform.position + Vector2.down;
-        if (Physics2D.OverlapPointNonAlloc(pose, col) > 0) col[0].gameObject.SendMessage(_explosionMessage);
-
-        pose = (Vector2)transform.position + Vector2.right;
-        if (Physics2D.OverlapPointNonAlloc(pose, col) > 0) col[0].gameObject.SendMessage(_explosionMessage);
-
-        pose = (Vector2)transform.position + Vector2.left;
-        if (Physics2D.OverlapPointNonAlloc(pose, col) > 0) col[0].gameObject.SendMessage(_explosionMessage);
-
+        }
     }
 }

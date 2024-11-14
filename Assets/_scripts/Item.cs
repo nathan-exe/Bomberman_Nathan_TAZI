@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// por tous les objets pouvan etre ramassés en passant dessus
+/// </summary>
 public abstract class Item : MonoBehaviour
 {
     private const string _playerTag = "Player";

@@ -5,9 +5,21 @@ using UnityEngine;
 
 public class BombItem : Item
 {
+    public static List<BombItem> freeBombs = new();
+
+    private void OnEnable()
+    {
+        freeBombs.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        freeBombs.Remove(this);
+    }
+
     protected override void OnItemPickedUp(GameObject player)
     {
-        if(player.TryGetComponent<PlayerBombing>(out PlayerBombing p))
+        if(player.TryGetComponent<BombBag>(out BombBag p))
         {
             if (p.CanPickUpBomb)
             {
@@ -17,8 +29,10 @@ public class BombItem : Item
         }
     }
 
-    public void respawn()
+    public void Respawn()
     {
-        transform.position =  (Vector2) Graph.Instance.Nodes.Keys.ToArray<Vector2Int>()[Random.Range(0, Graph.Instance.Nodes.Keys.Count)];
+        gameObject.SetActive(true);
+        transform.position =  (Vector2) Graph.Instance.FreeNodes[Random.Range(0, Graph.Instance.FreeNodes.Count)].pose;
+        transform.position -= Vector3.forward;
     }
 }
