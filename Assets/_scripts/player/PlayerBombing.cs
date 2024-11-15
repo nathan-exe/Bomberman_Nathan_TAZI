@@ -25,7 +25,7 @@ public class BombBag : MonoBehaviour
     public void useBomb()
     {
         //pull bomb from pool
-        PoolReferences.Instance.BombPool.PullObjectFromPool(((Vector2)transform.position).Round()); //@extdrcfygvubhinjo,kp;lzr^qesgr:hdfmcbvxjopihulgykfhvihbjl,
+        PoolReferences.Instance.BombPool.PullObjectFromPool((Vector3)((Vector2)transform.position).Round()-Vector3.forward); //@extdrcfygvubhinjo,kp;lzr^qesgr:hdfmcbvxjopihulgykfhvihbjl,
         bombItem.Respawn();
         bombItem = null;
     }

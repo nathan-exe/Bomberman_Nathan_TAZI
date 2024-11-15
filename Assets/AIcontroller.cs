@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -33,6 +34,7 @@ public class AiController : MonoBehaviour
         do
         {
             Node nextTarget = FindBestTarget();
+            if (nextTarget == null) return;
 
             if (currentTarget == nextTarget) await Task.Yield();
             currentTarget = nextTarget;
@@ -42,22 +44,36 @@ public class AiController : MonoBehaviour
             {
                 if (!_bombing.CanPickUpBomb) _bombing.useBomb(); //quand il a atteint le mur
             }
-        } while (isActiveAndEnabled && Application.isPlaying);
+        } while (isActiveAndEnabled && Application.isPlaying && _ennemyWall!=null);
     }
+
+    /// <summary>
+    /// trouve la prochaine cible vers laquelle il faudrait se déplacer
+    /// </summary>
+    /// <returns></returns>
     Node FindBestTarget()
     {
         Node nextTarget;
-        if (_bombing.CanPickUpBomb) //si il n'a pas de bombe, il va en chercher une
+        if (_bombing.CanPickUpBomb && _ennemyWall!=null) //si il n'a pas de bombe, il va en chercher une
         {
             nextTarget = FindNearestBombItem();
         } 
-        else //sinon, il va sur le bloc le plus proche du mur pour la poser.
+        else if(_ennemyWall !=null)//sinon, il va sur le bloc le plus proche du mur pour la poser.
         {
             nextTarget = FindNearestNodeAroundWall(((Vector2)_ennemyWall.transform.position).RoundToInt());
+        }else
+        {
+            nextTarget=null;
         }
+
         return nextTarget;
     }
 
+    /// <summary>
+    /// trouve le noeud le plus proche à coté du mur ennemi
+    /// </summary>
+    /// <param name="wall"></param>
+    /// <returns></returns>
     private Node FindNearestNodeAroundWall(Vector2Int wall)
     {
         float minDistanceSquared = float.PositiveInfinity;
@@ -80,6 +96,10 @@ public class AiController : MonoBehaviour
         return Graph.Instance.Nodes[closest];
     }
 
+    /// <summary>
+    /// trouve la bombe ramassable la plus proche
+    /// </summary>
+    /// <returns></returns>
     private Node FindNearestBombItem()
     {
         float minDistanceSquared = float.PositiveInfinity; 
