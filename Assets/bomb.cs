@@ -43,8 +43,8 @@ public class Bomb : MonoBehaviour
         foreach (Vector2Int offset in new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left })
         {
 
-            Vector2 pose = (Vector2)transform.position + offset;
-        if (Physics2D.OverlapPointNonAlloc(pose, col, ~LayerMask.GetMask(Graph.NodeLayer)) > 0) col[0].gameObject.SendMessage(_explosionMessage, SendMessageOptions.DontRequireReceiver);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, offset, 3, ~LayerMask.GetMask(Graph.NodeLayer));
+            if (hit) hit.collider.gameObject.SendMessage(_explosionMessage, SendMessageOptions.DontRequireReceiver);
 
         }
     }

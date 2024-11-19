@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class BombBag : MonoBehaviour
 {
-
-    BombItem bombItem = null;
-
-    public bool CanPickUpBomb => bombItem == null;
-
+    public Stack<BombItem> BombStack = new();
+    public bool hasBombs => BombStack.Count>0;
     public void pickUpBomb(BombItem bomb)
     {
-        bombItem = bomb;
+        BombStack.Push(bomb) ;
     }
 
     public void TryToUseBomb()
     {
-        if(bombItem != null)
+        if(hasBombs)
         {
             useBomb();
         }
@@ -26,7 +23,6 @@ public class BombBag : MonoBehaviour
     {
         //pull bomb from pool
         PoolReferences.Instance.BombPool.PullObjectFromPool((Vector3)((Vector2)transform.position).Round()-Vector3.forward); //@extdrcfygvubhinjo,kp;lzr^qesgr:hdfmcbvxjopihulgykfhvihbjl,
-        bombItem.Respawn();
-        bombItem = null;
+        BombStack.Pop().Respawn();
     }
 }

@@ -21,11 +21,10 @@ public class BombItem : Item
     {
         if(player.TryGetComponent<BombBag>(out BombBag p))
         {
-            if (p.CanPickUpBomb)
-            {
-                p.pickUpBomb(this);
-                gameObject.SetActive(false);
-            }
+
+            p.pickUpBomb(this);
+            gameObject.SetActive(false);
+            
         }
     }
 

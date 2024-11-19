@@ -35,14 +35,13 @@ public class AiController : MonoBehaviour
         {
             Node nextTarget = FindBestTarget();
             if (nextTarget == null) return;
-
             if (currentTarget == nextTarget) await Task.Yield();
             currentTarget = nextTarget;
 
             bool targetWasReached = await _movement.TravelToNodeThroughGraph(currentTarget, _pathfinder, () => FindBestTarget() != currentTarget); //commence à avancer sur la cible
             if (targetWasReached)
             {
-                if (!_bombing.CanPickUpBomb) _bombing.useBomb(); //quand il a atteint le mur
+                if (_bombing.hasBombs) _bombing.useBomb(); //quand il a atteint le mur
             }
         } while (isActiveAndEnabled && Application.isPlaying && _ennemyWall!=null);
     }
@@ -54,7 +53,7 @@ public class AiController : MonoBehaviour
     Node FindBestTarget()
     {
         Node nextTarget;
-        if (_bombing.CanPickUpBomb && _ennemyWall!=null) //si il n'a pas de bombe, il va en chercher une
+        if (!_bombing.hasBombs && _ennemyWall!=null) //si il n'a pas de bombe, il va en chercher une
         {
             nextTarget = FindNearestBombItem();
         } 

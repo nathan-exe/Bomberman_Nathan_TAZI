@@ -28,11 +28,6 @@ public class PlayerController : MonoBehaviour
     {
         if (movementInput != Vector2Int.zero && (_currentMovementTask == null || _currentMovementTask.IsCompleted))
         {
-            /*if(Input.GetMouseButtonDown(0))
-            {
-                Collider2D hit = Physics2D.OverlapPoint(_cam.ScreenToWorldPoint(Input.mousePosition));
-                    if(hit!=null) _currentMovementTask = _movement.TravelToNodeThroughGraph(hit.GetComponent<Node>(), FindObjectOfType<Astar>());
-            }*/
             Vector2 targetPosition = ((Vector2)transform.position + movementInput).Round();
             if (!Physics2D.OverlapPoint(targetPosition, _layerMask))  _currentMovementTask = _movement.MoveToPoint(Graph.Instance.Nodes[ targetPosition.RoundToInt()], _movement._moveSpeed);
         }
