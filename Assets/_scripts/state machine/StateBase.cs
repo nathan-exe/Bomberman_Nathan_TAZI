@@ -9,7 +9,7 @@ public abstract class StateBase
     public StateOutcome Outcome;
     public StateConditions Conditions;
 
-    StateMachine machine;
+    protected StateMachine machine;
     StateConditions cond = new StateConditions();
     public abstract void OnEntered();
     public abstract void OnExited();
@@ -25,17 +25,9 @@ public abstract class StateBase
         machine.transitionTo( nextState);
     }
 
-    
+    public abstract float computeScore(StateOutcome outcome, StateWeights weights);
 
+    public abstract bool canTransitionToState(StateConditions conditions);
 
-    float computeScore(StateOutcome outcome,StateWeights weights)
-    {
-        
-    }
-
-    bool canTransitionToState(StateConditions conditions)
-    {
-         
-    }
 }
 

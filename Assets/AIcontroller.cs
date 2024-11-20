@@ -17,35 +17,40 @@ public class AiController : MonoBehaviour
 
     Node currentTarget;
 
+    Stack<Node> _path = new();
+    Task _currentMovementTask;
+
+    private async void Update()
+    {
+
+        if ((_currentMovementTask == null||_currentMovementTask.IsCompleted) && _path.Count > 0)
+        {
+            //_path = _pathfinder.ComputePath(_movement._currentNode, FindBestTarget());
+        foreach (Node node in _path) { print(node.name); }
+
+            _path.Pop();
+            _currentMovementTask = _movement.MoveToPoint(_path.Pop(), _movement._moveSpeed, true);
+        }
+        //print(_currentMovementTask);
+        //print(FindBestTarget());
+    }
+
     private void Awake()
     {
         TryGetComponent<Move>(out _movement);
         TryGetComponent<BombBag>(out _bombing);
+
     }
 
     private void Start()
     {
         _movement.TeleportToPosition(transform.position);
-        play();
+        //_path = _pathfinder.ComputePath(_movement._currentNode, FindBestTarget());
+
+        //play();
     }
 
-    async void play()
-    {
-        do
-        {
-            Node nextTarget = FindBestTarget();
-            if (nextTarget == null) return;
-            if (currentTarget == nextTarget) await Task.Yield();
-            currentTarget = nextTarget;
-
-            bool targetWasReached = await _movement.TravelToNodeThroughGraph(currentTarget, _pathfinder, () => FindBestTarget() != currentTarget); //commence à avancer sur la cible
-            if (targetWasReached)
-            {
-                if (_bombing.hasBombs) _bombing.useBomb(); //quand il a atteint le mur
-            }
-        } while (isActiveAndEnabled && Application.isPlaying && _ennemyWall!=null);
-    }
-
+   /*
     /// <summary>
     /// trouve la prochaine cible vers laquelle il faudrait se déplacer
     /// </summary>
@@ -66,54 +71,7 @@ public class AiController : MonoBehaviour
         }
 
         return nextTarget;
-    }
+    }*/
 
-    /// <summary>
-    /// trouve le noeud le plus proche à coté du mur ennemi
-    /// </summary>
-    /// <param name="wall"></param>
-    /// <returns></returns>
-    private Node FindNearestNodeAroundWall(Vector2Int wall)
-    {
-        float minDistanceSquared = float.PositiveInfinity;
-        Vector2Int closest = wall+Vector2Int.up;
-
-        foreach ( Vector2Int offset in new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left })
-        {
-            Vector2Int pose = wall + offset;
-            if (Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActiveAndEnabled)
-            {
-                float dsq = (pose - (Vector2)transform.position).sqrMagnitude;
-                if (dsq < minDistanceSquared)
-                {
-                    minDistanceSquared = dsq;
-                    closest = pose;
-                }
-            }
-        }
-        
-        return Graph.Instance.Nodes[closest];
-    }
-
-    /// <summary>
-    /// trouve la bombe ramassable la plus proche
-    /// </summary>
-    /// <returns></returns>
-    private Node FindNearestBombItem()
-    {
-        float minDistanceSquared = float.PositiveInfinity; 
-        Transform closest = null;
-        foreach ( BombItem bomb in BombItem.freeBombs)
-        {
-            float dsq = (bomb.transform.position - transform.position).sqrMagnitude;
-            if (dsq < minDistanceSquared)
-            {
-                minDistanceSquared = dsq;
-                closest = bomb.transform;
-            } 
-        }
-
-        return closest == null ? null : Graph.Instance.Nodes[((Vector2)closest.position).RoundToInt()];
-    }
 
 }

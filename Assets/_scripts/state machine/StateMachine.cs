@@ -8,10 +8,15 @@ public class StateMachine : MonoBehaviour
     StateBase currentState;
 
     //states
-    
+
+    //references
+    public Astar Pathfinder;
+    public Move Movement;
+    public AIsensor Sensor;
+
     private void Awake()
     {
-        //state.init()
+        
     }
 
     public void transitionTo(StateBase to)
@@ -19,5 +24,11 @@ public class StateMachine : MonoBehaviour
         currentState.OnExited();
         currentState = to;
         to.OnEntered();
+    }
+
+
+    private void Update()
+    {
+        currentState.Update();
     }
 }

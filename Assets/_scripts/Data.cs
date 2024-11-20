@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-struct IAGameState//recalculer le pathfinding des que ça change
+public struct IAGameState//recalculer le pathfinding des que ça change
 {
     public int HP;
     public int playerHP;
@@ -37,7 +37,7 @@ public struct StateConditions
     int HPTreshold;
 }
 
-struct StateWeights
+public struct StateWeights
 {
     public float HPweight;
     public float playerHPweight;
