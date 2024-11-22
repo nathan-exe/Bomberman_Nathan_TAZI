@@ -14,6 +14,7 @@ public class Move : MonoBehaviour
     public Node CurrentNode { get; private set; }
     public float _moveSpeed;
 
+    public event Action OnMove;
 
     /// <summary>
     /// se déplace vers le point donné.
@@ -33,6 +34,8 @@ public class Move : MonoBehaviour
         float duration = Vector2.Distance(start, (Vector2)node.transform.position) /speed;
         float endTime = Time.time+duration;
 
+        CurrentNode = node;
+        OnMove?.Invoke();
         while (Time.time < endTime)
         {
             if (!Application.isPlaying) return;
@@ -45,37 +48,22 @@ public class Move : MonoBehaviour
         }
         transform.position = (Vector3)(Vector2)node.transform.position + Vector3.forward * -2;
         transform.rotation = targetRotation;
-        CurrentNode = node;
 
     }
 
-    /*
     /// <summary>
-    /// trouve le chemin le plus court vers le noeud et fait bouger le bonhomme vers lui.
-    /// </summary>
-    /// <param name="node"></param>
-    /// <returns>retourne true si il a atteint sa destination</returns>
-    public async Task<bool> TravelToNodeThroughGraph(Node node, Astar _pathFinder, DynamicBoolean shouldStop = null)
-    {
-        //trouve le chemin avec le A*
-        _pathFinder.ResetNodes();
-        Stack<Node> path = _pathFinder.ComputePath(_currentNode, node);
-        if (path.Count <= 1) return true;
-
-        //suit le chemin
-        bool destinationWasReached = await FollowPath(path, _moveSpeed,true,shouldStop);
-
-        return destinationWasReached;
-    }*/
-
-    /// <summary>
-    /// teleports the objet to the given pose, but also snaps it to the grid.
+    /// téléporte le bonhomme vers la position et le snap sur la grille
     /// </summary>
     /// <param name="pose"></param>
     public void TeleportToPosition(Vector2 pose)
     {
         transform.position = pose.Round();
         CurrentNode = Graph.Instance.Nodes[pose.RoundToV2Int()];
+    }
+
+    private void Start()
+    {
+        TeleportToPosition(transform.position);
     }
 }
 

@@ -23,6 +23,7 @@ public class AIsensor : MonoBehaviour
 
     //events
     public event Action OnBombPickedUpByAgent;
+    public event Action OnPlayerMoved;
 
     /// <summary>
     /// trouve la bombe ramassable la plus proche
@@ -45,16 +46,36 @@ public class AIsensor : MonoBehaviour
     }
     
     /// <summary>
-    /// renvoie le noeud sur lequel se trouve actuellement le joueur
+    /// renvoie le noeud le plus proche du joueur si il y'en a un de libre. renvoie null sinon
     /// </summary>
     /// <returns></returns>
-    public Node GetPlayerNode()
+    public Node FindNearestNodeAroundPlayer()
     {
-        return _playerMovement.CurrentNode;
+        float minDistanceSquared = float.PositiveInfinity;
+        Vector2Int closest = Vector2Int.zero;
+
+        foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
+        {
+            Vector2Int pose = _playerMovement.CurrentNode.pose + offset;
+            if (Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActiveAndEnabled)
+            {
+                float DistanceSquared = (pose - (Vector2)transform.position).sqrMagnitude;
+                if (DistanceSquared < minDistanceSquared)
+                {
+                    minDistanceSquared = DistanceSquared;
+                    closest = pose;
+                }
+            }
+        }
+
+        if(closest != Vector2Int.zero) return Graph.Instance.Nodes[closest];
+        return null;
     }
 
+    //set up events
     private void Awake()
     {
         _AibombBag.OnBombPickedUp += () => OnBombPickedUpByAgent?.Invoke();
+        _playerMovement.OnMove += () => OnPlayerMoved?.Invoke();
     }
 }

@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class State_Win : StateBase
 {
-    public State_Win(StateMachine sm) : base(sm)
-    {
-    }
+    public State_Win(StateMachine sm) : base(sm) { }
 
     public override bool canTransitionToState(StateConditions conditions)
     {
@@ -21,16 +19,15 @@ public class State_Win : StateBase
 
     public override void OnEntered()
     {
-        Debug.Log("GG");
+        Time.timeScale = 0;
+        Debug.Log("l'IA a gagné");
     }
 
     public override void OnExited()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void Update()
     {
-        throw new System.NotImplementedException();
     }
 }

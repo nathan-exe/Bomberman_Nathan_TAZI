@@ -21,12 +21,13 @@ public class State_ChasingPlayer : StateBase
 
     public override void OnEntered()
     {
-        machine.Controller.OnStep += GoToPlayer;
+        GoToPlayer();
+        machine.Sensor.OnPlayerMoved += GoToPlayer;
     }
 
     public override void OnExited()
     {
-        machine.Controller.OnStep -= GoToPlayer;
+        machine.Sensor.OnPlayerMoved -= GoToPlayer;
     }
 
     public override void Update()
@@ -38,10 +39,11 @@ public class State_ChasingPlayer : StateBase
     /// </summary>
     void GoToPlayer()
     {
-        Node PlayerNode = machine.Sensor.GetPlayerNode();
+        Node PlayerNode = machine.Sensor.FindNearestNodeAroundPlayer();
         if (PlayerNode != null && (PlayerNode != _currentTarget || _currentTarget == null))
         {
             _currentTarget = PlayerNode;
+
             machine.Controller.SetDestination(_currentTarget);
         }
     }

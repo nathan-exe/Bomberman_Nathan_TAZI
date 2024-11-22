@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
         TryGetComponent<BombBag>(out _bombing);
     }
 
+
+
     void Update()
     {
         if (movementInput != Vector2Int.zero && (_currentMovementTask == null || _currentMovementTask.IsCompleted))

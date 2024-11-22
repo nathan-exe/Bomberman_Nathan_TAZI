@@ -6,6 +6,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// ce Monobehaviour permet de générer le graph rapidement dans Unity.
+/// </summary>
 public class GraphBuilder : MonoBehaviour
 {
     [SerializeField] Vector2Int _size = new Vector2Int(10, 10);
@@ -65,6 +68,8 @@ public class GraphBuilder : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(GraphBuilder))]
 public class GraphBuilder_Editor : Editor
 {
@@ -77,3 +82,5 @@ public class GraphBuilder_Editor : Editor
         }
     }
 }
+
+#endif

@@ -5,7 +5,7 @@ using Unity.Jobs;
 using UnityEditor;
 using UnityEngine;
 
-public class Astar : MonoBehaviour
+public class Astar : PathFinder
 {
     private Node[] _nodes;
     [SerializeField] Transform _graph;
@@ -15,7 +15,7 @@ public class Astar : MonoBehaviour
         _nodes = _graph.GetComponentsInChildren<Node>();
     }
 
-    public  Stack<Node> ComputePath(Node from, Node to)
+    public override Stack<Node> ComputePath(Node from, Node to)
     {
         if(from == to) return new Stack<Node>();
 

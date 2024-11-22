@@ -6,9 +6,7 @@ using UnityEngine;
 public class State_CollectingBombs : StateBase
 {
     Node _currentTarget;
-    public State_CollectingBombs(StateMachine sm) : base(sm)
-    {
-    }
+    public State_CollectingBombs(StateMachine sm) : base(sm) { }
 
     public override bool canTransitionToState(StateConditions conditions)
     {
