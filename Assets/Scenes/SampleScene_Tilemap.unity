@@ -75386,14 +75386,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8322170673375742076, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
+    - {fileID: 2090540193030575557, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
       insertIndex: 2
+      addedObject: {fileID: 1000278385}
+    - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
+      insertIndex: 3
       addedObject: {fileID: 1000278374}
     - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
-      insertIndex: -1
+      insertIndex: 4
       addedObject: {fileID: 1000278377}
   m_SourcePrefab: {fileID: 100100000, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
 --- !u!1 &1000278373 stripped
@@ -75414,7 +75418,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pathfinder: {fileID: 1264167679}
-  _ennemyWall: {fileID: 1091245188}
 --- !u!114 &1000278375 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2268521544058338705, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
@@ -75452,6 +75455,20 @@ MonoBehaviour:
   _playerHPcomponent: {fileID: 5726436509860013319}
   _AiHPcomponent: {fileID: 1000278375}
   _AibombBag: {fileID: 1000278376}
+--- !u!114 &1000278385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000278373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7547cb2aa5346d243bf728cf42d5a570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sensor: {fileID: 1000278377}
+  Controller: {fileID: 1000278374}
 --- !u!1 &1000378425
 GameObject:
   m_ObjectHideFlags: 0

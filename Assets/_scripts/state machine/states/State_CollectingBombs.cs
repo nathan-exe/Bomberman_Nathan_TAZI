@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class State_CollectingBombs : StateBase
 {
+    Node _currentTarget;
+    public State_CollectingBombs(StateMachine sm) : base(sm)
+    {
+    }
+
     public override bool canTransitionToState(StateConditions conditions)
     {
         throw new System.NotImplementedException();
@@ -16,16 +22,33 @@ public class State_CollectingBombs : StateBase
 
     public override void OnEntered()
     {
-        throw new System.NotImplementedException();
+        GoToNearestBomb();
+
+        machine.Controller.OnStep += GoToNearestBomb;
+        machine.Sensor.OnBombPickedUpByAgent += GoToNearestBomb;
     }
 
     public override void OnExited()
     {
-        throw new System.NotImplementedException();
+        machine.Controller.OnStep -= GoToNearestBomb;
+        machine.Sensor.OnBombPickedUpByAgent -= GoToNearestBomb;
     }
 
     public override void Update()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
+    }
+
+    /// <summary>
+    /// trouve la bombe la plus proche et recalcule le chemin vers elle si elle a changé
+    /// </summary>
+    void GoToNearestBomb()
+    {
+        Node nearestBomb = machine.Sensor.FindNearestBombNode();
+        if (nearestBomb  != null && (nearestBomb != _currentTarget || _currentTarget == null))
+        {
+            _currentTarget = nearestBomb;
+            machine.Controller.SetDestination(_currentTarget);
+        }
     }
 }

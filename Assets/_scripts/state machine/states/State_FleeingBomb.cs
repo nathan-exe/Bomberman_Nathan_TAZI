@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class State_FleeingBomb : StateBase
 {
+    public State_FleeingBomb(StateMachine sm) : base(sm)
+    {
+    }
+
     public override bool canTransitionToState(StateConditions conditions)
     {
         throw new System.NotImplementedException();
@@ -17,7 +21,6 @@ public class State_FleeingBomb : StateBase
 
     public override void OnEntered()
     {
-        machine.
     }
 
     public override void OnExited()

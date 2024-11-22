@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class State_Win : StateBase
 {
+    public State_Win(StateMachine sm) : base(sm)
+    {
+    }
+
     public override bool canTransitionToState(StateConditions conditions)
     {
         throw new System.NotImplementedException();

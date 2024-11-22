@@ -11,7 +11,7 @@ public delegate bool DynamicBoolean();
 
 public class Move : MonoBehaviour
 {
-    public Node _currentNode { get; private set; }
+    public Node CurrentNode { get; private set; }
     public float _moveSpeed;
 
 
@@ -24,8 +24,6 @@ public class Move : MonoBehaviour
     /// <returns></returns>
     public async Task MoveToPoint(Node node,float speed,bool smoothstep = true) 
     {
-        print(_currentNode);
-        print(node);
         Quaternion startRotation = transform.rotation;
         Vector2 toPoint = (Vector2)transform.position - (Vector2)node.transform.position ;
         Quaternion targetRotation = Quaternion.Euler(0, 0,Mathf.Atan2(toPoint.y,toPoint.x)*Mathf.Rad2Deg+180);
@@ -47,7 +45,7 @@ public class Move : MonoBehaviour
         }
         transform.position = (Vector3)(Vector2)node.transform.position + Vector3.forward * -2;
         transform.rotation = targetRotation;
-        _currentNode = node;
+        CurrentNode = node;
 
     }
 
@@ -76,8 +74,8 @@ public class Move : MonoBehaviour
     /// <param name="pose"></param>
     public void TeleportToPosition(Vector2 pose)
     {
-        transform.position = (Vector2)pose.RoundToInt();
-        _currentNode = Graph.Instance.Nodes[pose.RoundToInt()];
+        transform.position = pose.Round();
+        CurrentNode = Graph.Instance.Nodes[pose.RoundToV2Int()];
     }
 }
 

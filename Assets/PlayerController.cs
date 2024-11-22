@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         if (movementInput != Vector2Int.zero && (_currentMovementTask == null || _currentMovementTask.IsCompleted))
         {
             Vector2 targetPosition = ((Vector2)transform.position + movementInput).Round();
-            if (!Physics2D.OverlapPoint(targetPosition, _layerMask))  _currentMovementTask = _movement.MoveToPoint(Graph.Instance.Nodes[ targetPosition.RoundToInt()], _movement._moveSpeed);
+            if (!Physics2D.OverlapPoint(targetPosition, _layerMask))  _currentMovementTask = _movement.MoveToPoint(Graph.Instance.Nodes[ targetPosition.RoundToV2Int()], _movement._moveSpeed);
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,14 @@ public class BombBag : MonoBehaviour
 {
     public Stack<BombItem> BombStack = new();
     public bool hasBombs => BombStack.Count>0;
+
+    public event Action OnBombPickedUp;
+
+
     public void pickUpBomb(BombItem bomb)
     {
         BombStack.Push(bomb) ;
+        OnBombPickedUp?.Invoke();
     }
 
     public void TryToUseBomb()

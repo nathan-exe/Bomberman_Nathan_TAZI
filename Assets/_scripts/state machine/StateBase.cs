@@ -15,7 +15,7 @@ public abstract class StateBase
     public abstract void OnExited();
     public abstract void Update();
 
-    public void Init(StateMachine sm)
+    public StateBase(StateMachine sm)
     {
         machine = sm;
     }

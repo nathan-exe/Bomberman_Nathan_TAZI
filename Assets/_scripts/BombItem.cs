@@ -11,7 +11,6 @@ public class BombItem : Item
     {
         freeBombs.Add(this);
     }
-
     private void OnDisable()
     {
         freeBombs.Remove(this);
@@ -19,15 +18,17 @@ public class BombItem : Item
 
     protected override void OnItemPickedUp(GameObject player)
     {
+        //ajoute la bombe à l'inventaire du joueur
         if(player.TryGetComponent<BombBag>(out BombBag p))
         {
-
-            p.pickUpBomb(this);
             gameObject.SetActive(false);
-            
+            p.pickUpBomb(this);
         }
     }
 
+    /// <summary>
+    /// fait reapparaitre la bombe à un endroit aleatoire
+    /// </summary>
     public void Respawn()
     {
         gameObject.SetActive(true);

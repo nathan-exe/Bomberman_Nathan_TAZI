@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class State_ChasingPlayer : StateBase
 {
+    Node _currentTarget;
+    public State_ChasingPlayer(StateMachine sm) : base(sm)
+    {
+    }
+
     public override bool canTransitionToState(StateConditions conditions)
     {
         throw new System.NotImplementedException();
@@ -16,17 +21,29 @@ public class State_ChasingPlayer : StateBase
 
     public override void OnEntered()
     {
-        throw new System.NotImplementedException();
+        machine.Controller.OnStep += GoToPlayer;
     }
 
     public override void OnExited()
     {
-        throw new System.NotImplementedException();
+        machine.Controller.OnStep -= GoToPlayer;
     }
 
     public override void Update()
     {
-        throw new System.NotImplementedException();
+    }
+
+    /// <summary>
+    /// trouve le noeud sur lequel se trouve le joueur et recalcule le chemin si il a changé.
+    /// </summary>
+    void GoToPlayer()
+    {
+        Node PlayerNode = machine.Sensor.GetPlayerNode();
+        if (PlayerNode != null && (PlayerNode != _currentTarget || _currentTarget == null))
+        {
+            _currentTarget = PlayerNode;
+            machine.Controller.SetDestination(_currentTarget);
+        }
     }
 
 }
