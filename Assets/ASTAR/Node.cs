@@ -9,7 +9,7 @@ public enum NodeState { open, closed, notVisitedYet }
 public class Node : MonoBehaviour
 {
     public List<Node> Neighbours = new();
-    public Vector2Int pose => transform.position.ToVector2Int();
+    public Vector2Int pose => transform.position.RoundToV2Int();
 
     //algo
     [HideInInspector] public NodeState state = NodeState.notVisitedYet;

@@ -19,8 +19,6 @@ public class AiController : MonoBehaviour
     Stack<Node> _path = new();
     Task _currentMovementTask;
 
-    //Events
-    public event Action OnStep;
 
     /// <summary>
     /// change la destination vers laquelle se deplace le bonhomme et recalcule le chemin
@@ -38,7 +36,6 @@ public class AiController : MonoBehaviour
         //se déplace constamment sur le chemin.
         if ((_currentMovementTask == null||_currentMovementTask.IsCompleted) && _path.Count > 0)
         {
-            OnStep?.Invoke();
             _currentMovementTask = _movement.MoveToPoint(_path.Pop(), _movement._moveSpeed, true);
         }
     }

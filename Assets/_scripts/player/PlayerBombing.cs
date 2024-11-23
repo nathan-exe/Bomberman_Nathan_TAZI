@@ -9,6 +9,7 @@ public class BombBag : MonoBehaviour
     public bool hasBombs => BombStack.Count>0;
 
     public event Action OnBombPickedUp;
+    public event Action OnBombPlaced;
 
 
     public void pickUpBomb(BombItem bomb)
@@ -27,8 +28,14 @@ public class BombBag : MonoBehaviour
 
     public void useBomb()
     {
-        //pull bomb from pool
-        PoolReferences.Instance.BombPool.PullObjectFromPool((Vector3)((Vector2)transform.position).Round()-Vector3.forward); //@extdrcfygvubhinjo,kp;lzr^qesgr:hdfmcbvxjopihulgykfhvihbjl,
+        PoolReferences.Instance.BombPool.PullObjectFromPool((Vector3)((Vector2)transform.position).Round()-Vector3.forward);
         BombStack.Pop().Respawn();
+        StartCoroutine(boule());
+    }
+
+    IEnumerator boule() //je vais peter un cable romain
+    {
+        yield return new WaitForFixedUpdate();
+        OnBombPlaced?.Invoke();
     }
 }

@@ -20,16 +20,16 @@ public class State_CollectingBombs : StateBase
 
     public override void OnEntered()
     {
-        GoToNearestBomb();
+        FindPathToNearestBomb();
 
-        machine.Controller.OnStep += GoToNearestBomb;
-        machine.Sensor.OnBombPickedUpByAgent += GoToNearestBomb;
+        machine.Sensor.OnBombPickedUpByPlayer += FindPathToNearestBomb;
+        machine.Sensor.OnBombPickedUpByAgent += FindPathToNearestBomb;
     }
 
     public override void OnExited()
     {
-        machine.Controller.OnStep -= GoToNearestBomb;
-        machine.Sensor.OnBombPickedUpByAgent -= GoToNearestBomb;
+        machine.Sensor.OnBombPickedUpByPlayer -= FindPathToNearestBomb;
+        machine.Sensor.OnBombPickedUpByAgent -= FindPathToNearestBomb;
     }
 
     public override void Update()
@@ -40,7 +40,7 @@ public class State_CollectingBombs : StateBase
     /// <summary>
     /// trouve la bombe la plus proche et recalcule le chemin vers elle si elle a changé
     /// </summary>
-    void GoToNearestBomb()
+    void FindPathToNearestBomb()
     {
         Node nearestBomb = machine.Sensor.FindNearestBombNode();
         if (nearestBomb  != null && (nearestBomb != _currentTarget || _currentTarget == null))

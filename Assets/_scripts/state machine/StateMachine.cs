@@ -28,7 +28,7 @@ public class StateMachine : MonoBehaviour
     private IEnumerator Start()
     {
         yield return 0 ;
-        transitionTo(S_ChasingPlayer);
+        transitionTo(S_FleeingBomb);
     }
 
     public void transitionTo(StateBase to)
@@ -37,7 +37,6 @@ public class StateMachine : MonoBehaviour
         currentState = to;
         currentState.OnEntered();
     }
-
 
     private void Update()
     {

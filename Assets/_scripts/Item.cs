@@ -11,7 +11,6 @@ public abstract class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision.gameObject);
         if (collision.gameObject.tag == _playerTag)
         {
             OnItemPickedUp(collision.gameObject);
