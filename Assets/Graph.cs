@@ -4,11 +4,13 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
 public class Graph : MonoBehaviour
 {
-    public Dictionary<Vector2Int, TileAstarNode> Nodes = new();
-    public NodeContainer NodePrefab;
 
+    [SerializeField] GraphBuilder _graphBuilder;
+
+    public Dictionary<Vector2Int, TileAstarNode> Nodes = new();
     public List<TileAstarNode> FreeNodes { get; private set; } = new();
 
     //singleton
@@ -22,9 +24,11 @@ public class Graph : MonoBehaviour
         if(_instance != null && _instance!=this) Destroy(_instance.gameObject); 
         _instance = this;
 
-        FindObjectOfType<GraphBuilder>().BuildGraph();
 
         //génération du dictionnaire de noeuds
+
+        _graphBuilder.BuildGraph();
+
         Nodes.Clear();
         FreeNodes.Clear();
         foreach(Transform t in transform)
