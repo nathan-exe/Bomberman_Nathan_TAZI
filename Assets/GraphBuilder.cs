@@ -35,16 +35,19 @@ public class GraphBuilder : MonoBehaviour
                 bool collision = Physics2D.OverlapPoint(new Vector2(x, y), LayerMask.GetMask(solidLayer)); //le node sera desactivé si il y'avait un objet sur la case avant qu'il ne spawn
 
                 //Debug.DrawRay(new Vector2(x, y), Vector2.up * 0.2f, Color.red, 1);
-                Node newNode = Instantiate(_graph.NodePrefab, new Vector2(x, y), Quaternion.identity, transform);
-                newNode.gameObject.name = $"Node({x},{y})";
+                NodeContainer mb = Instantiate(_graph.NodePrefab, new Vector2(x, y), Quaternion.identity, transform);
+                TileAstarNode newNode = mb.node;
+                newNode.monoBehaviour = mb;
+
+                newNode.monoBehaviour.gameObject.name = $"Node({x},{y})";
                 _graph.Nodes.Add(new Vector2Int(x, y), newNode); //add nodes to free tiles
 
-                newNode.gameObject.SetActive(!collision);
+                newNode.monoBehaviour.gameObject.SetActive(!collision);
             }
         }
 
         //link nodes with eachother
-        foreach (KeyValuePair<Vector2Int,Node> pair in _graph.Nodes)
+        foreach (KeyValuePair<Vector2Int,TileAstarNode> pair in _graph.Nodes)
         {
             Vector2Int pose = pair.Key+ Vector2Int.up;
             if(_graph.Nodes.ContainsKey(pose)) pair.Value.Neighbours.Add(_graph.Nodes[pose]);

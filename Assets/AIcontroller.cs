@@ -16,7 +16,7 @@ public class AiController : MonoBehaviour
     [SerializeField] PathFinder _pathfinder;
 
     //mouvement
-    Stack<Node> _path = new();
+    Stack<AstarNode> _path = new();
     Task _currentMovementTask;
 
 
@@ -24,10 +24,9 @@ public class AiController : MonoBehaviour
     /// change la destination vers laquelle se deplace le bonhomme et recalcule le chemin
     /// </summary>
     /// <param name="targetNode"></param>
-    public void SetDestination(Node targetNode)
+    public void SetDestination(AstarNode targetNode)
     {
         _path = _pathfinder.ComputePath(_movement.CurrentNode, targetNode);
-        print(_path.Count);
     }
 
     public void Move(Vector2Int offset)
@@ -41,7 +40,7 @@ public class AiController : MonoBehaviour
         //se déplace constamment sur le chemin.
         if ((_currentMovementTask == null||_currentMovementTask.IsCompleted) && _path.Count > 0)
         {
-            _currentMovementTask = _movement.MoveToPoint(_path.Pop(), _movement._moveSpeed, true);
+            _currentMovementTask = _movement.MoveToPoint((TileAstarNode)_path.Pop(), _movement._moveSpeed, true);
         }
     }
 

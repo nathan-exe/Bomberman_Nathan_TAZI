@@ -38,7 +38,7 @@ public class AIsensor : MonoBehaviour
     /// trouve la bombe ramassable la plus proche
     /// </summary>
     /// <returns></returns>
-    public Node FindNearestBombNode()
+    public TileAstarNode FindNearestBombNode()
     {
         float minDistanceSquared = float.PositiveInfinity;
         Transform closest = null;
@@ -58,7 +58,7 @@ public class AIsensor : MonoBehaviour
     /// renvoie le noeud le plus proche du joueur (par rapport au bot) si il y'en a un de libre. renvoie null sinon
     /// </summary>
     /// <returns></returns>
-    public Node FindNearestNodeAroundPlayer()
+    public TileAstarNode FindNearestNodeAroundPlayer()
     {
         float minDistanceSquared = float.PositiveInfinity;
         Vector2Int closest = Vector2Int.zero;
@@ -66,7 +66,7 @@ public class AIsensor : MonoBehaviour
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
             Vector2Int pose = _playerMovement.CurrentNode.pose + offset;
-            if (Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActiveAndEnabled)
+            if (Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActive())
             {
                 float DistanceSquared = (pose - (Vector2)transform.position).sqrMagnitude;
                 if (DistanceSquared < minDistanceSquared)
@@ -130,7 +130,7 @@ public class AIsensor : MonoBehaviour
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
             Vector2Int pose = point.RoundToV2Int() + offset;
-            if(Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActiveAndEnabled) output.Add(point.RoundToV2Int() + offset);
+            if(Graph.Instance.Nodes.ContainsKey(pose)) output.Add(point.RoundToV2Int() + offset);
         }
         return output;
     }

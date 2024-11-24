@@ -6,10 +6,10 @@ using UnityEngine.UIElements;
 
 public class Graph : MonoBehaviour
 {
-    public Dictionary<Vector2Int,Node> Nodes = new();
-    public Node NodePrefab;
+    public Dictionary<Vector2Int, TileAstarNode> Nodes = new();
+    public NodeContainer NodePrefab;
 
-    public List<Node> FreeNodes { get; private set; } = new();
+    public List<TileAstarNode> FreeNodes { get; private set; } = new();
 
     //singleton
     private static Graph _instance;
@@ -21,14 +21,20 @@ public class Graph : MonoBehaviour
     {
         if(_instance != null && _instance!=this) Destroy(_instance.gameObject); 
         _instance = this;
-        
+
+        FindObjectOfType<GraphBuilder>().BuildGraph();
+
         //génération du dictionnaire de noeuds
         Nodes.Clear();
         FreeNodes.Clear();
         foreach(Transform t in transform)
         {
-            if (t.gameObject.TryGetComponent<Node>(out Node n)) Nodes.Add(n.pose, n);
-            if (t.gameObject.activeSelf) FreeNodes.Add(n);
+            if (t.gameObject.TryGetComponent<NodeContainer>(out NodeContainer n)) 
+            {
+                n.node.monoBehaviour = n;
+                Nodes.Add(n.node.pose, n.node);
+            }
+            if (t.gameObject.activeSelf) FreeNodes.Add(n.node);
         }
     }
 
@@ -44,7 +50,7 @@ public class Graph : MonoBehaviour
         return Nodes.ContainsKey(position) && Nodes[position].gameObject.activeSelf;
     }
 
-    public void RemoveNodeFromGraph(Node node)
+    public void RemoveNodeFromGraph(TileAstarNode node)
     {
         node.gameObject.SetActive(false);
         FreeNodes.Remove(node);

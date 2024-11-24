@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class State_CollectingBombs : StateBase
 {
-    Node _currentTarget;
+    AstarNode _currentTarget;
     public State_CollectingBombs(StateMachine sm) : base(sm) { }
 
     public override bool canTransitionToState(StateConditions conditions)
@@ -42,7 +42,7 @@ public class State_CollectingBombs : StateBase
     /// </summary>
     void FindPathToNearestBomb()
     {
-        Node nearestBomb = machine.Sensor.FindNearestBombNode();
+        AstarNode nearestBomb = machine.Sensor.FindNearestBombNode();
         if (nearestBomb  != null && (nearestBomb != _currentTarget || _currentTarget == null))
         {
             _currentTarget = nearestBomb;

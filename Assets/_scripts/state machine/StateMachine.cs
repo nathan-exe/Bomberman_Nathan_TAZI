@@ -28,7 +28,7 @@ public class StateMachine : MonoBehaviour
     private IEnumerator Start()
     {
         yield return 0 ;
-        transitionTo(S_FleeingBomb);
+        transitionTo(S_CollectingBombs);
     }
 
     public void transitionTo(StateBase to)

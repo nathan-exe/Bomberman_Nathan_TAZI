@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class State_ChasingPlayer : StateBase
 {
-    Node _currentTarget;
+    AstarNode _currentTarget;
     public State_ChasingPlayer(StateMachine sm) : base(sm)
     {
     }
@@ -39,7 +39,7 @@ public class State_ChasingPlayer : StateBase
     /// </summary>
     void GoToPlayer()
     {
-        Node PlayerNode = machine.Sensor.FindNearestNodeAroundPlayer();
+        AstarNode PlayerNode = machine.Sensor.FindNearestNodeAroundPlayer();
         if (PlayerNode != null && (PlayerNode != _currentTarget || _currentTarget == null))
         {
             _currentTarget = PlayerNode;

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class PathFinder : MonoBehaviour
 {
-    public abstract Stack<Node> ComputePath(Node from, Node to);
+    public abstract Stack<AstarNode> ComputePath(AstarNode from, AstarNode to);
 }

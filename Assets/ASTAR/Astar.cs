@@ -7,43 +7,46 @@ using UnityEngine;
 
 public class Astar : PathFinder
 {
-    private Node[] _nodes;
+    private AstarNode[] _nodes;
     [SerializeField] Transform _graph;
 
     private void Awake()
     {
-        _nodes = _graph.GetComponentsInChildren<Node>();
+        List<TileAstarNode> temp = new();
+        foreach (NodeContainer mb in _graph.GetComponentsInChildren<NodeContainer>()) temp.Add(mb.node);
+        _nodes = temp.ToArray();
+
     }
 
-    public override Stack<Node> ComputePath(Node from, Node to)
+    public override Stack<AstarNode> ComputePath(AstarNode from, AstarNode to)
     {
-        if(from == to) return new Stack<Node>();
+        if(from == to) return new Stack<AstarNode>();
 
         ResetNodes();
-        List<Node> _openNodes = new();
+        List<AstarNode> _openNodes = new();
         //parcourt le premier noeud
         from.parcourir(ref _openNodes,to);
         //tant que la cible n'est pas trouvée
         while (!_openNodes.Contains(to) && _openNodes.Count>0)
         {
             //trouve le voisin le plus proche
-            Node best = _openNodes[0];
-            foreach (Node node in _openNodes)
+            AstarNode best = _openNodes[0];
+            foreach (AstarNode node in _openNodes)
             {
-                if(node.f<best.f) best = node;
+                if(node.ComputeCost()<best.ComputeCost()) best = node;
             }
             //parcourt le voisin le plus proche
             best.parcourir(ref _openNodes,to);
         }
 
         //renvoie le chemin complet
-        return to.findPathToBeginning(new Stack<Node>());
+        return to.findPathToBeginning(new Stack<AstarNode>());
     }
 
 
     public void ResetNodes()
     {
-        foreach(Node node in _nodes)
+        foreach(AstarNode node in _nodes)
         {
             node.resetNode();
         }

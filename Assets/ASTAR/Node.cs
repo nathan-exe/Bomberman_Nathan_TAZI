@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,36 +7,44 @@ using UnityEngine;
 
 public enum NodeState { open, closed, notVisitedYet }
 
-public class Node : MonoBehaviour
+/// <summary>
+/// cette classe abstraite représente n'importe quel noeud pouvant être parcouru par l'algo Astar.
+/// </summary>
+[Serializable]
+public abstract class AstarNode
 {
-    public List<Node> Neighbours = new();
-    public Vector2Int pose => transform.position.RoundToV2Int();
+    [SerializeField] public List<AstarNode> Neighbours = new();
 
     //algo
     [HideInInspector] public NodeState state = NodeState.notVisitedYet;
-    Node precedentNode = null;
+    AstarNode precedentNode = null;
 
-    public const float gWheight = .5f;
-    [HideInInspector] public int g;
+    /// <summary>
+    /// le nombre de noeuds parcourus depuis le début du chemin
+    /// </summary>
+    [HideInInspector] public int g; 
+
+    /// <summary>
+    /// le cout du noeud indépendamment de g
+    /// </summary>
     [HideInInspector] public float h;
-    public float f => h + g* gWheight;
+    public abstract float ComputeCost();
+    public abstract bool isActive();
 
-    //visuels
-    SpriteRenderer _spriteRenderer;
-    const bool _debugView = false;
+    /// <summary>
+    /// utilisé pour calculer la variable H du noeud (voir pdf Astar)
+    /// H représente une partie du cout du noeud
+    /// </summary>
+    /// <param name="targetNode"></param>
+    /// <returns></returns>
+    public abstract float compute_h(AstarNode targetNode);
 
-    private void Awake()
-    {
-        TryGetComponent<SpriteRenderer>(out _spriteRenderer);
-        resetNode();
-    }
 
     /// <summary>
     /// remet le noeud à 0 : non visité et blanc
     /// </summary>
     public void resetNode()
     {
-        if(_debugView) _spriteRenderer.color = Color.white;
         g = 0;
         h = 0;
         state = NodeState.notVisitedYet;
@@ -47,7 +56,6 @@ public class Node : MonoBehaviour
     /// </summary>
     public void open()
     {
-        if (_debugView) _spriteRenderer.color = Color.green;
         state = NodeState.open;
     }
 
@@ -55,7 +63,7 @@ public class Node : MonoBehaviour
     /// ouvre le noeud et sauvegarde le noeud précédent
     /// </summary>
     /// <param name="node"></param>
-    public void openFromNode(Node node)
+    public void openFromNode(AstarNode node)
     {
         precedentNode = node;
         open();
@@ -64,9 +72,8 @@ public class Node : MonoBehaviour
     /// <summary>
     /// ferme le noeud
     /// </summary>
-    public void close()
+    public void Close()
     {
-        if (_debugView) _spriteRenderer.color = Color.red;
         state = NodeState.closed;
     }
 
@@ -76,18 +83,18 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <param name="openNodes"></param>
     /// <param name="target"></param>
-    public void parcourir(ref List<Node> openNodes,Node target)
+    public void parcourir(ref List<AstarNode> openNodes,AstarNode target)
     {
-        close();
+        Close();
         openNodes.Remove(this);
 
-        foreach (Node n in Neighbours)
+        foreach (AstarNode n in Neighbours)
         {
-            if (n.isActiveAndEnabled && n.state == NodeState.notVisitedYet)
+            if (n.isActive() && n.state == NodeState.notVisitedYet)
             {
                 openNodes.Add(n);
                 n.openFromNode(this);
-                n.h = Vector2.Distance(target.transform.position, n.transform.position);
+                n.h = n.compute_h(target);
                 n.g = g + 1;
             }
         }
@@ -98,34 +105,12 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <param name="l"></param>
     /// <returns></returns>
-    public Stack<Node> findPathToBeginning(Stack<Node> l)
+    public Stack<AstarNode> findPathToBeginning(Stack<AstarNode> l)
     {
         if (precedentNode == null) return l;
         l.Push(this);
-        Debug.DrawLine(transform.position+Vector3.one*0.1f, precedentNode.transform.position + Vector3.one * 0.1f, Color.green);
         return precedentNode.findPathToBeginning(l);
     }
 
-
-    //----------- Guizmos -----------
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        foreach (Node node in Neighbours)
-        {
-            if(node.isActiveAndEnabled)   Gizmos.DrawLine(transform.position, node.transform.position);
-        }
-    }
-
-   /* private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1, .5f, 1, .3f);
-        foreach (Node node in Neighbours)
-        {
-            if (node.isActiveAndEnabled)  Gizmos.DrawLine(transform.position, node.transform.position);
-        }
-
-    }*/
 
 }

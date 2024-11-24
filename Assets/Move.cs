@@ -11,7 +11,7 @@ public delegate bool DynamicBoolean();
 
 public class Move : MonoBehaviour
 {
-    public Node CurrentNode { get; private set; }
+    public TileAstarNode CurrentNode { get; private set; }
     public float _moveSpeed;
 
     public event Action OnMove;
@@ -23,7 +23,7 @@ public class Move : MonoBehaviour
     /// <param name="speed"></param>
     /// <param name="smoothstep"></param>
     /// <returns></returns>
-    public async Task MoveToPoint(Node node,float speed,bool smoothstep = true) 
+    public async Task MoveToPoint(TileAstarNode node,float speed,bool smoothstep = true) 
     {
         Quaternion startRotation = transform.rotation;
         Vector2 toPoint = (Vector2)transform.position - (Vector2)node.transform.position ;
