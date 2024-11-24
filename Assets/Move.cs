@@ -57,7 +57,7 @@ public class Move : MonoBehaviour
     /// <param name="pose"></param>
     public void TeleportToPosition(Vector2 pose)
     {
-        transform.position = pose.Round();
+        transform.position = (Vector3)pose.Round()-Vector3.forward*2f;
         CurrentNode = Graph.Instance.Nodes[pose.RoundToV2Int()];
     }
 

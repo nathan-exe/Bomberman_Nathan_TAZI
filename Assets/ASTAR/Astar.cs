@@ -21,7 +21,7 @@ public class Astar : PathFinder
 
         ResetNodes();
         List<Node> _openNodes = new();
-        //parcourt le premuier noeud
+        //parcourt le premier noeud
         from.parcourir(ref _openNodes,to);
         //tant que la cible n'est pas trouvée
         while (!_openNodes.Contains(to) && _openNodes.Count>0)

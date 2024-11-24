@@ -9,6 +9,6 @@ public class gWheightSlider : MonoBehaviour
 
     public void OnValueChanged()
     {
-        Node.gWheight = _slider.value;
+        //Node.gWheight = _slider.value;
     }
 }

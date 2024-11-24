@@ -15,7 +15,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public NodeState state = NodeState.notVisitedYet;
     Node precedentNode = null;
 
-    public static float gWheight = .5f;
+    public const float gWheight = .5f;
     [HideInInspector] public int g;
     [HideInInspector] public float h;
     public float f => h + g* gWheight;
@@ -100,10 +100,10 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public Stack<Node> findPathToBeginning(Stack<Node> l)
     {
-        l.Push(this);
         if (precedentNode == null) return l;
-        Debug.DrawLine(transform.position, precedentNode.transform.position,Color.red,5);
-         return precedentNode.findPathToBeginning(l);
+        l.Push(this);
+        Debug.DrawLine(transform.position+Vector3.one*0.1f, precedentNode.transform.position + Vector3.one * 0.1f, Color.green);
+        return precedentNode.findPathToBeginning(l);
     }
 
 
@@ -118,7 +118,7 @@ public class Node : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+   /* private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, .5f, 1, .3f);
         foreach (Node node in Neighbours)
@@ -126,6 +126,6 @@ public class Node : MonoBehaviour
             if (node.isActiveAndEnabled)  Gizmos.DrawLine(transform.position, node.transform.position);
         }
 
-    }
+    }*/
 
 }

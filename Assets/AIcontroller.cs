@@ -27,9 +27,14 @@ public class AiController : MonoBehaviour
     public void SetDestination(Node targetNode)
     {
         _path = _pathfinder.ComputePath(_movement.CurrentNode, targetNode);
-        _path.Pop(); //pas besoin du noeud actuel en haut de la pile.
+        print(_path.Count);
     }
 
+    public void Move(Vector2Int offset)
+    {
+        _path.Clear();
+        _=_movement.MoveToPoint(Graph.Instance.Nodes[ transform.position.RoundToV2Int() + offset],_movement._moveSpeed);
+    }
 
     private void Update()
     {

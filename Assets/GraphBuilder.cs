@@ -34,7 +34,7 @@ public class GraphBuilder : MonoBehaviour
             {
                 bool collision = Physics2D.OverlapPoint(new Vector2(x, y), LayerMask.GetMask(solidLayer)); //le node sera desactivé si il y'avait un objet sur la case avant qu'il ne spawn
 
-                Debug.DrawRay(new Vector2(x, y), Vector2.up * 0.2f, Color.red, 1);
+                //Debug.DrawRay(new Vector2(x, y), Vector2.up * 0.2f, Color.red, 1);
                 Node newNode = Instantiate(_graph.NodePrefab, new Vector2(x, y), Quaternion.identity, transform);
                 newNode.gameObject.name = $"Node({x},{y})";
                 _graph.Nodes.Add(new Vector2Int(x, y), newNode); //add nodes to free tiles

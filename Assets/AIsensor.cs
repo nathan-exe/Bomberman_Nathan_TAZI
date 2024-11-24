@@ -104,11 +104,9 @@ public class AIsensor : MonoBehaviour
 
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
-            Debug.DrawRay(point, (Vector2)offset * 3);
             RaycastHit2D hit = Physics2D.Raycast(point , offset, 3, LayerMask.GetMask("Solid"));
-            if (hit) print(hit.collider.gameObject.name);
 
-            if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) EditorApplication.isPaused = true ;// output.Add(bomb);
+            if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) output.Add(bomb);
         }
     }
 
@@ -116,7 +114,7 @@ public class AIsensor : MonoBehaviour
     {
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
-            RaycastHit2D hit = Physics2D.Raycast(point.Round(), offset, 3, ~LayerMask.GetMask(Graph.NodeLayer));
+            RaycastHit2D hit = Physics2D.Raycast(point.Round(), offset, 3, LayerMask.GetMask("Solid"));
             if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) return false;
         }
         return true;
@@ -131,7 +129,7 @@ public class AIsensor : MonoBehaviour
         List<Vector2Int> output = new();
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
-            Vector2Int pose = _playerMovement.CurrentNode.pose + offset;
+            Vector2Int pose = point.RoundToV2Int() + offset;
             if(Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActiveAndEnabled) output.Add(point.RoundToV2Int() + offset);
         }
         return output;
