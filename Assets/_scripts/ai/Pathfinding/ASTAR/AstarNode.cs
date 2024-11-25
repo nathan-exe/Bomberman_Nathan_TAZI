@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public enum NodeState { open, closed, notVisitedYet }
 
@@ -16,8 +17,8 @@ public abstract class AstarNode
     [SerializeField] public List<AstarNode> Neighbours = new();
 
     //algo
-    [HideInInspector] public NodeState state = NodeState.notVisitedYet;
-    protected AstarNode precedentNode = null;
+    [HideInInspector] public NodeState VisitedState = NodeState.notVisitedYet;
+    public AstarNode previousNode { get; protected set; } = null;
 
     /// <summary>
     /// le nombre de noeuds parcourus depuis le début du chemin
@@ -27,7 +28,7 @@ public abstract class AstarNode
     public abstract float ComputeCost(AstarNode target);
     public abstract bool isActive();
 
-    public event Action OnOpened;
+    public event Action OnBeforeActivationCheck;
 
     /// <summary>
     /// remet le noeud à 0 : non visité et blanc
@@ -35,8 +36,8 @@ public abstract class AstarNode
     public virtual void resetNode()
     {
         g = 0;
-        state = NodeState.notVisitedYet;
-        precedentNode = null;
+        VisitedState = NodeState.notVisitedYet;
+        previousNode = null;
     }
 
     /// <summary>
@@ -44,26 +45,16 @@ public abstract class AstarNode
     /// </summary>
     public void open()
     {
-        state = NodeState.open;
-        OnOpened?.Invoke();
+        VisitedState = NodeState.open;
     }
 
-    /// <summary>
-    /// ouvre le noeud et sauvegarde le noeud précédent
-    /// </summary>
-    /// <param name="node"></param>
-    public void openFromNode(AstarNode node)
-    {
-        precedentNode = node;
-        open();
-    }
 
     /// <summary>
     /// ferme le noeud
     /// </summary>
     public void Close()
     {
-        state = NodeState.closed;
+        VisitedState = NodeState.closed;
     }
 
     //algo
@@ -79,11 +70,17 @@ public abstract class AstarNode
 
         foreach (AstarNode n in Neighbours)
         {
-            if (n.isActive() && n.state == NodeState.notVisitedYet)
+            if (n.VisitedState == NodeState.notVisitedYet)
             {
-                openNodes.Add(n);
-                n.openFromNode(this);
-                n.g = g + 1;
+                n.previousNode = this;
+                n.OnBeforeActivationCheck?.Invoke();
+
+                if (n.isActive())
+                {
+                    openNodes.Add(n);
+                    n.open();
+                    n.g = g + 1;
+                }
             }
         }
     }
@@ -95,10 +92,23 @@ public abstract class AstarNode
     /// <returns></returns>
     public Stack<AstarNode> findPathToBeginning(Stack<AstarNode> l)
     {
-        if (precedentNode == null) return l;
+        if (previousNode == null) return l;
+        Debug.LogWarning(this.GetType());
         l.Push(this);
-        return precedentNode.findPathToBeginning(l);
+        return previousNode.findPathToBeginning(l);
     }
 
+    /// <summary>
+    /// permet de trouver tous les noeuds appartenant au même graphe que ce noeud ci.
+    /// </summary>
+    /// <param name="list"></param>
+    public void AddNeighboursToList_Recursive (ref List<AstarNode> list)
+    {
+        list.Add(this);
+        foreach ( AstarNode neighbour in Neighbours)
+        {
+            if(!list.Contains(neighbour)) neighbour.AddNeighboursToList_Recursive(ref list);
+        }
+    }
 
 }

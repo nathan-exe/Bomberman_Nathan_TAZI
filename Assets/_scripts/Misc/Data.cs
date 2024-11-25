@@ -8,41 +8,27 @@ public enum GameWinState { win,lose,playing}
 [Serializable]
 public struct GameContext//recalculer le pathfinding des que ça change
 {
-    public int AgentHp;
-    public int PlayerHp;
+    public float AgentHp;
+    public float PlayerHp;
     public int AgentBombCount;
-    public float DistanceToPlayer;
+    public int PlayerBombCount;
+    public int DangerousBombsAroundAgent;
+    public int DangerousBombsAroundPlayer;
 
-    public GameContext(int agentHp, int playerHp, int agentBombCount, float distanceToPlayer)
+    public GameContext(float agentHp, float playerHp, int agentBombCount, int playerBombCount, int dangerousBombsAroundAgent, int dangerousBombsAroundPlayer)
     {
         AgentHp = agentHp;
         PlayerHp = playerHp;
         AgentBombCount = agentBombCount;
-        DistanceToPlayer = distanceToPlayer;
+        PlayerBombCount = playerBombCount;
+        DangerousBombsAroundAgent = dangerousBombsAroundAgent;
+        DangerousBombsAroundPlayer = dangerousBombsAroundPlayer;
     }
-}
 
-
-
-[Serializable]
-public struct StateConditions
-{
-    public StateConditions(int bombTreshold, int playerHPTreshold, int HPTreshold)
+    public override string ToString()
     {
-        this.AgentBombTreshold = bombTreshold;
-        this.PlayerHpTreshold = playerHPTreshold;
-        this.AgentHpTreshold = HPTreshold;
+        return $"AgentHp = {AgentHp};\r\nPlayerHp = {PlayerHp};\r\nAgentBombCount = {AgentBombCount};\r\nPlayerBombCount = {PlayerBombCount};\r\nDangerousBombsAroundAgent = {DangerousBombsAroundAgent};\r\nDangerousBombsAroundPlayer = {DangerousBombsAroundPlayer};";
     }
-
-    public int AgentBombTreshold;
-    public int PlayerHpTreshold;
-    public int AgentHpTreshold;
 }
 
-[Serializable]
-public struct StateCostWeights
-{
-    public float AgentHpweight;
-    public float playerHpweight;
-    public float AgentbombGainWeight;
-}
+

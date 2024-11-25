@@ -1,29 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Unity.Jobs;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Astar : PathFinder
 {
-    private AstarNode[] _nodes;
     [SerializeField] Transform _graph;
-
-    private void Awake()
-    {
-        List<TileAstarNode> temp = new();
-        foreach (NodeContainer mb in _graph.GetComponentsInChildren<NodeContainer>()) temp.Add(mb.node);
-        _nodes = temp.ToArray();
-
-    }
+    List<AstarNode> _allNodes = new();
 
     public override Stack<AstarNode> ComputePath(AstarNode from, AstarNode to)
     {
         if(from == to) return new Stack<AstarNode>();
 
+        //reset tous les noeuds du graphe
+        if (_allNodes.Count==0) from.AddNeighboursToList_Recursive(ref _allNodes);
+        ResetAllNodes(_allNodes);
 
-        ResetNodes();
         List<AstarNode> _openNodes = new();
         AstarNode TargetIfNoPathFound = from; //utilisé si la cible est incaccessible
 
@@ -44,22 +40,22 @@ public class Astar : PathFinder
         }
 
         //si la cible est inaccessible, il retourne le chemin vers le noeud le plus proche qu'il ait réussi à trouver
-        if (_openNodes.Count == 0 && !_openNodes.Contains(to)) return TargetIfNoPathFound.findPathToBeginning(new Stack<AstarNode>());
+        if (_openNodes.Count == 0 && !_openNodes.Contains(to)) { print("couldn't reach target, chose " + ((goapAstarNode)TargetIfNoPathFound).State.GetType().ToString()+" instead"); return TargetIfNoPathFound.findPathToBeginning(new Stack<AstarNode>()); }
 
         //renvoie le chemin complet
+        // print();
+        print("reached Target " + ((goapAstarNode)to).State.GetType().ToString());
         return to.findPathToBeginning(new Stack<AstarNode>());
     }
 
 
-    public void ResetNodes()
+    public void ResetAllNodes(List<AstarNode> nodes)
     {
-        foreach(AstarNode node in _nodes)
+        foreach(AstarNode node in nodes)
         {
             node.resetNode();
         }
     }
-
-
 
 }
 

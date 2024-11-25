@@ -9,11 +9,11 @@ public class State_Dead : StateBase
 
     public override bool CanBeEnteredFromContext(GameContext precedentContext)
     {
-        throw new System.NotImplementedException();
+        return precedentContext.AgentHp <= 0;
     }
     public override GameContext SimulateOutcomeContext(GameContext precedentContext)
     {
-        throw new System.NotImplementedException();
+        return precedentContext;
     }
 
     public override void OnEntered()

@@ -9,14 +9,18 @@ public class State_ChasingPlayer : StateBase
     {
     }
 
-    public override bool CanBeEnteredFromContext(GameContext precedentContext)
+    public override bool CanBeEnteredFromContext(GameContext ctx)
     {
-        throw new System.NotImplementedException();
+        return ctx.AgentHp > 0 && ctx.AgentBombCount > 0;
     }
 
-    public override GameContext SimulateOutcomeContext(GameContext precedentContext)
+    public override GameContext SimulateOutcomeContext(GameContext ctx)
     {
-        throw new System.NotImplementedException();
+        ctx.AgentHp -= ctx.DangerousBombsAroundAgent + ctx.PlayerBombCount*0.5f;
+        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer + ctx.AgentBombCount*0.5f;//*weight
+        ctx.AgentBombCount /=2;
+        return ctx;
+
     }
 
     public override void OnEntered()

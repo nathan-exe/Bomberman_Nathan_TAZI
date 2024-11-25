@@ -7,14 +7,14 @@ public class State_Win : StateBase
 {
     public State_Win(StateMachine sm) : base(sm) { }
 
-    public override bool CanBeEnteredFromContext(GameContext precedentContext)
+    public override bool CanBeEnteredFromContext(GameContext ctx)
     {
-        throw new System.NotImplementedException();
+        return ctx.AgentHp>0 && ctx.PlayerHp <= 0;
     }
 
     public override GameContext SimulateOutcomeContext(GameContext precedentContext)
     {
-        throw new System.NotImplementedException();
+        return precedentContext;
     }
 
     public override void OnEntered()

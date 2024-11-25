@@ -11,6 +11,16 @@ public class State_FleeingBomb : StateBase
     public State_FleeingBomb(StateMachine sm) : base(sm)
     {
     }
+    public override bool CanBeEnteredFromContext(GameContext ctx)
+    {
+        return ctx.AgentHp > 0;
+    }
+    public override GameContext SimulateOutcomeContext(GameContext ctx)
+    {
+        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer ;//*weight
+        return ctx;
+    }
+
 
     public override void OnEntered()
     {
@@ -50,13 +60,4 @@ public class State_FleeingBomb : StateBase
         }
     }
 
-    public override GameContext SimulateOutcomeContext(GameContext precedentContext)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override bool CanBeEnteredFromContext(GameContext precedentContext)
-    {
-        throw new System.NotImplementedException();
-    }
 }

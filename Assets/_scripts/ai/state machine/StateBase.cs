@@ -7,7 +7,6 @@ public abstract class StateBase
 {
 
     protected StateMachine machine;
-    StateConditions cond = new StateConditions();
     public abstract void OnEntered();
     public abstract void OnExited();
     public abstract void Update();
