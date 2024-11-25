@@ -12,16 +12,6 @@ public class State_FleeingBomb : StateBase
     {
     }
 
-    public override bool canTransitionToState(StateConditions conditions)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override float computeScore(StateOutcome outcome, StateWeights weights)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnEntered()
     {
         machine.Sensor.OnAgentMoved += ReactToNearbyBombs;

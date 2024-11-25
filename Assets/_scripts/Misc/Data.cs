@@ -1,45 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameWinState { win,lose,playing}
 
-public struct IAGameState//recalculer le pathfinding des que ça change
+[Serializable]
+public struct GameContext//recalculer le pathfinding des que ça change
 {
-    public int HP;
-    public int playerHP;
-    public int bombCount;
+    public int AgentHp;
+    public int PlayerHp;
+    public int AgentBombCount;
+    public float DistanceToPlayer;
 }
 
-public struct StateOutcome
-{
-    public StateOutcome(int potentialHPgain, int potentialPlayerHPgain, int potentialBombGain)
-    {
-        this.potentialHPgain = potentialHPgain;
-        this.potentialPlayerHPgain = potentialPlayerHPgain;
-        this.potentialBombGain = potentialBombGain;
-    }
 
-    public int potentialHPgain;
-    public int potentialPlayerHPgain;
-    public int potentialBombGain;
-}
+
+[Serializable]
 public struct StateConditions
 {
     public StateConditions(int bombTreshold, int playerHPTreshold, int HPTreshold)
     {
-        this.bombTreshold = bombTreshold;
-        this.playerHPTreshold = playerHPTreshold;
-        this.HPTreshold = HPTreshold;
+        this.AgentBombTreshold = bombTreshold;
+        this.PlayerHpTreshold = playerHPTreshold;
+        this.AgentHpTreshold = HPTreshold;
     }
 
-    int bombTreshold;
-    int playerHPTreshold;
-    int HPTreshold;
+    public int AgentBombTreshold;
+    public int PlayerHpTreshold;
+    public int AgentHpTreshold;
 }
 
-public struct StateWeights
+[Serializable]
+public struct StateCostWeights
 {
-    public float HPweight;
-    public float playerHPweight;
-    public float bombGainWeight;
+    public float AgentHpweight;
+    public float playerHpweight;
+    public float AgentbombGainWeight;
 }

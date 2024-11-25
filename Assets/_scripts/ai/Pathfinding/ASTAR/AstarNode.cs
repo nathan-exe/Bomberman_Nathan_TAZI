@@ -17,28 +17,17 @@ public abstract class AstarNode
 
     //algo
     [HideInInspector] public NodeState state = NodeState.notVisitedYet;
-    AstarNode precedentNode = null;
+    protected AstarNode precedentNode = null;
 
     /// <summary>
     /// le nombre de noeuds parcourus depuis le début du chemin
     /// </summary>
     [HideInInspector] public int g; 
 
-    /// <summary>
-    /// le cout du noeud indépendamment de g
-    /// </summary>
-    [HideInInspector] public float h;
-    public abstract float ComputeCost();
+    public abstract float ComputeCost(AstarNode target);
     public abstract bool isActive();
 
-    /// <summary>
-    /// utilisé pour calculer la variable H du noeud (voir pdf Astar)
-    /// H représente une partie du cout du noeud
-    /// </summary>
-    /// <param name="targetNode"></param>
-    /// <returns></returns>
-    public abstract float compute_h(AstarNode targetNode);
-
+    public event Action OnOpened;
 
     /// <summary>
     /// remet le noeud à 0 : non visité et blanc
@@ -46,7 +35,6 @@ public abstract class AstarNode
     public void resetNode()
     {
         g = 0;
-        h = 0;
         state = NodeState.notVisitedYet;
         precedentNode = null;
     }
@@ -57,6 +45,7 @@ public abstract class AstarNode
     public void open()
     {
         state = NodeState.open;
+        OnOpened?.Invoke();
     }
 
     /// <summary>
@@ -94,7 +83,6 @@ public abstract class AstarNode
             {
                 openNodes.Add(n);
                 n.openFromNode(this);
-                n.h = n.compute_h(target);
                 n.g = g + 1;
             }
         }

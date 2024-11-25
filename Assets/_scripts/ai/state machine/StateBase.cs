@@ -5,9 +5,6 @@ using UnityEngine;
 
 public abstract class StateBase
 {
-    //Astar
-    public StateOutcome Outcome;
-    public StateConditions Conditions;
 
     protected StateMachine machine;
     StateConditions cond = new StateConditions();
@@ -22,12 +19,11 @@ public abstract class StateBase
 
     public void transitionTo(StateBase nextState)
     {
-        machine.transitionTo( nextState);
+        machine.transitionTo(nextState);
     }
 
-    public abstract float computeScore(StateOutcome outcome, StateWeights weights);
 
-    public abstract bool canTransitionToState(StateConditions conditions);
+    public abstract GameContext SimulateOutcome(GameContext precedentContext);
+    public abstract bool CanBeEnteredFromContext(GameContext precedentContext);
 
 }
-

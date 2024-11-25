@@ -13,6 +13,7 @@ public class AiController : MonoBehaviour
 {
     //references
     Move _movement;
+    BombBag _bombBag;
     [SerializeField] PathFinder _pathfinder;
 
     //mouvement
@@ -35,6 +36,11 @@ public class AiController : MonoBehaviour
         _=_movement.MoveToPoint(Graph.Instance.Nodes[ transform.position.RoundToV2Int() + offset],_movement._moveSpeed);
     }
 
+    public void PlaceBomb()
+    {
+        _bombBag.TryToUseBomb();
+    }
+
     private void Update()
     {
         //se déplace constamment sur le chemin.
@@ -47,6 +53,7 @@ public class AiController : MonoBehaviour
     private void Awake()
     {
         TryGetComponent<Move>(out _movement);
+        TryGetComponent<BombBag>(out _bombBag);
     }
 
 }

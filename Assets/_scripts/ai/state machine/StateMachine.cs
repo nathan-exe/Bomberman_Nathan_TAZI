@@ -16,7 +16,7 @@ public class StateMachine : MonoBehaviour
     public State_Win S_Win;
 
     //references
-    public AIsensor Sensor;
+    public AiSensor Sensor;
     public AiController Controller;
 
 

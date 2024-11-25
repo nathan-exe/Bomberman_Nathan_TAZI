@@ -33,7 +33,7 @@ public class Astar : PathFinder
             AstarNode best = _openNodes[0];
             foreach (AstarNode node in _openNodes)
             {
-                if(node.ComputeCost()<best.ComputeCost()) best = node;
+                if(node.ComputeCost(to)<best.ComputeCost(to)) best = node;
             }
             //parcourt le voisin le plus proche
             best.parcourir(ref _openNodes,to);

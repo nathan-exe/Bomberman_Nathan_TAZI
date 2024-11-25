@@ -9,25 +9,18 @@ public class State_ChasingPlayer : StateBase
     {
     }
 
-    public override bool canTransitionToState(StateConditions conditions)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override float computeScore(StateOutcome outcome, StateWeights weights)
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override void OnEntered()
     {
         GoToPlayer();
         machine.Sensor.OnPlayerMoved += GoToPlayer;
+        machine.Sensor.OnAgentMoved += TryToPlaceBombs;
     }
 
     public override void OnExited()
     {
         machine.Sensor.OnPlayerMoved -= GoToPlayer;
+        machine.Sensor.OnAgentMoved -= TryToPlaceBombs;
     }
 
     public override void Update()
@@ -45,6 +38,17 @@ public class State_ChasingPlayer : StateBase
             _currentTarget = PlayerNode;
 
             machine.Controller.SetDestination(_currentTarget);
+        }
+    }
+
+    void TryToPlaceBombs()
+    {
+        if((machine.transform.position-machine.Sensor.PlayerPosition.ToVector3()).sqrMagnitude<= 9)
+        {
+            if (Random.value > 0.5f)
+            {
+                machine.Controller.PlaceBomb();
+            }
         }
     }
 

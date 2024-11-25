@@ -9,7 +9,7 @@ using UnityEngine;
 /// cette classe contient plein de références et de méthodes qui permettent 
 /// aux différents states du bot d'acceder au contenu du jeu.
 /// </summary>
-public class AIsensor : MonoBehaviour
+public class AiSensor : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] HealthComponent _playerHPcomponent;
@@ -24,6 +24,8 @@ public class AIsensor : MonoBehaviour
     public int PlayerHP => _playerHPcomponent.HP;
     public int AgentHP => _playerHPcomponent.HP;
     public int AgentBombCount => _AiBombBag.BombStack.Count;
+
+    public Vector2Int PlayerPosition => _playerMovement.CurrentNode.pose;
 
     //events
     public event Action OnBombPickedUpByAgent;

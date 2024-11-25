@@ -18,12 +18,7 @@ public class TileAstarNode : AstarNode
     public Vector2Int pose => gameObject.transform.position.RoundToV2Int();
 
 
-    public const float gWheight = .5f;
-
-    public override float compute_h(AstarNode target)
-    {
-        return Vector2.Distance(((TileAstarNode)target).monoBehaviour.transform.position, monoBehaviour.transform.position);
-    }
+    public const float gWheight = .8f;
 
     public override bool isActive()
     {
@@ -34,9 +29,10 @@ public class TileAstarNode : AstarNode
     /// ici, f = h+g (comme dans le cour)
     /// </summary>
     /// <returns></returns>
-    public override float ComputeCost()
+    public override float ComputeCost(AstarNode target)
     {
-         return h + g * gWheight;
+        float h = Vector2.Distance(((TileAstarNode)target).transform.position, monoBehaviour.transform.position);
+        return h + g * gWheight;
     }
 
 }
