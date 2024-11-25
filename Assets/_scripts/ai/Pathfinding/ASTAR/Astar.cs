@@ -32,6 +32,12 @@ public class Astar : PathFinder
             AstarNode best = _openNodes[0];
             foreach (AstarNode node in _openNodes)
             {
+                /*print("-");
+                print("Node : " + ((goapAstarNode)node).State.GetType().ToString() +" "+ node.ComputeCost(to).ToString());
+                print("best : " + ((goapAstarNode)TargetIfNoPathFound).State.GetType().ToString()+ " " + TargetIfNoPathFound.ComputeCost(to).ToString());
+
+                print("-");*/
+
                 if(node.ComputeCost(to)< best.ComputeCost(to)) best = node;
                 if (node.ComputeCost(to) < TargetIfNoPathFound.ComputeCost(to)) TargetIfNoPathFound = node;
             }

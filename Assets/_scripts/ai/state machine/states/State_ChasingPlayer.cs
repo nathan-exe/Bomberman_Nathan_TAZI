@@ -16,9 +16,10 @@ public class State_ChasingPlayer : StateBase
 
     public override GameContext SimulateOutcomeContext(GameContext ctx)
     {
+        Debug.Log("sale salope");
         ctx.AgentHp -= ctx.DangerousBombsAroundAgent + ctx.PlayerBombCount*0.5f;
-        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer + ctx.AgentBombCount*0.5f;//*weight
-        ctx.AgentBombCount /=2;
+        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer + ctx.AgentBombCount*0.5f;
+        ctx.AgentBombCount -=1;
         return ctx;
 
     }

@@ -13,11 +13,12 @@ public class State_FleeingBomb : StateBase
     }
     public override bool CanBeEnteredFromContext(GameContext ctx)
     {
-        return ctx.AgentHp > 0;
+        return ctx.DangerousBombsAroundAgent>0 && ctx.AgentHp > - ctx.DangerousBombsAroundAgent ;//on met "-" pour compenser les PVs qu'il a perdu sur la simulation d'avant en restant à coté de la bombe
     }
     public override GameContext SimulateOutcomeContext(GameContext ctx)
     {
-        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer ;//*weight
+        ctx.AgentHp += ctx.DangerousBombsAroundAgent ;//on met "+=" pour compenser les PVs qu'il a perdu sur la simulation d'avant en restant à coté de la bombe
+        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer ;
         return ctx;
     }
 

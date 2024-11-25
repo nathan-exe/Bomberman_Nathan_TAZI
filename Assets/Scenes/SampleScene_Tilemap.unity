@@ -35019,7 +35019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 121.5
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -40412,7 +40412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 262.5
+      value: 147.5
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -48286,7 +48286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.5
+      value: -77.5
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -72533,6 +72533,7 @@ MonoBehaviour:
   CollectingBombs:
     VisitedState: 0
     g: 0
+    engine: {fileID: 0}
     SimulatedOutcomeContext:
       AgentHp: 0
       PlayerHp: 0
@@ -72540,9 +72541,11 @@ MonoBehaviour:
       PlayerBombCount: 0
       DangerousBombsAroundAgent: 0
       DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
   FleeingBombs:
     VisitedState: 0
     g: 0
+    engine: {fileID: 0}
     SimulatedOutcomeContext:
       AgentHp: 0
       PlayerHp: 0
@@ -72550,9 +72553,11 @@ MonoBehaviour:
       PlayerBombCount: 0
       DangerousBombsAroundAgent: 0
       DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
   ChasingPlayer:
     VisitedState: 0
     g: 0
+    engine: {fileID: 0}
     SimulatedOutcomeContext:
       AgentHp: 0
       PlayerHp: 0
@@ -72560,9 +72565,11 @@ MonoBehaviour:
       PlayerBombCount: 0
       DangerousBombsAroundAgent: 0
       DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
   Win:
     VisitedState: 0
     g: 0
+    engine: {fileID: 0}
     SimulatedOutcomeContext:
       AgentHp: 0
       PlayerHp: 0
@@ -72570,9 +72577,11 @@ MonoBehaviour:
       PlayerBombCount: 0
       DangerousBombsAroundAgent: 0
       DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
   Death:
     VisitedState: 0
     g: 0
+    engine: {fileID: 0}
     SimulatedOutcomeContext:
       AgentHp: 0
       PlayerHp: 0
@@ -72580,11 +72589,19 @@ MonoBehaviour:
       PlayerBombCount: 0
       DangerousBombsAroundAgent: 0
       DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
   Visu_CollectingBombs: {fileID: 1318354425}
   Visu_FleeingBombs: {fileID: 7323050233039732442}
   Visu_ChasingPlayer: {fileID: 1331135295}
   Visu_Win: {fileID: 1516441522}
   Visu_Death: {fileID: 1518545202}
+  ctx:
+    AgentHp: 3
+    PlayerHp: 3
+    AgentBombCount: 0
+    PlayerBombCount: 0
+    DangerousBombsAroundAgent: 0
+    DangerousBombsAroundPlayer: 0
 --- !u!114 &1000278402 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9196103189294640979, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
@@ -72602,7 +72619,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4342477861355085148}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000278373}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7547cb2aa5346d243bf728cf42d5a570, type: 3}
   m_Name: 
@@ -106171,7 +106188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 121.5
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -144944,7 +144961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7604890770346465802, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9196103189294640979, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
       propertyPath: _playerBombBag
@@ -145303,7 +145320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.5
+      value: -77.5
       objectReference: {fileID: 0}
     - target: {fileID: 4716591688157504261, guid: 992dea06988b020428da45c191ba6953, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

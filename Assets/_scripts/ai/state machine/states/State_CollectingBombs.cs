@@ -14,7 +14,7 @@ public class State_CollectingBombs : StateBase
     }
     public override GameContext SimulateOutcomeContext(GameContext ctx)
     {
-        ctx.AgentHp -= ctx.DangerousBombsAroundAgent - ctx.PlayerBombCount*0.5f;
+        ctx.AgentHp -= ctx.DangerousBombsAroundAgent + ctx.PlayerBombCount*0.5f;
         ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer;//*weight
 
         ctx.AgentBombCount++;

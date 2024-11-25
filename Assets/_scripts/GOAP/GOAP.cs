@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,7 +37,6 @@ public class GOAP : MonoBehaviour
         Death = new(stateMachine.S_Dead, this,Visu_Death);
         Win = new(stateMachine.S_Win, this,Visu_Win);
     }
-
     void LinkNodes()
     {
         CollectingBombs.Neighbours = new List<AstarNode>() { FleeingBombs,ChasingPlayer,Death,Win };
@@ -45,7 +45,6 @@ public class GOAP : MonoBehaviour
         Win.Neighbours = new List<AstarNode>() {};
         Death.Neighbours = new List<AstarNode>() {};
     }
-
     void ResetAllNodes()
     {
         CollectingBombs.resetNode();
@@ -54,8 +53,6 @@ public class GOAP : MonoBehaviour
         Death.resetNode();
         Win.resetNode();
     }
-
-
 
     public GameContext GetCurrentGameContext()
     {
@@ -66,22 +63,21 @@ public class GOAP : MonoBehaviour
     {
         ResetAllNodes();
         CurrentNode.UpdateSimulatedOutcome();
-
-        Stack<AstarNode> path = astar.ComputePath(CurrentNode,Win); //itérer plusieurs fois sans reset les nodes ? while !path.contains(win) ?
-        print(path.Count);
-        if(path.Count>0) ((goapAstarNode)path.Peek()).Visu.SetRed();
-        while (path.Count > 0) Debug.Log(((goapAstarNode)path.Pop()).State.GetType());
-        return null;
+        Stack<AstarNode> path = astar.ComputePath(CurrentNode, Win);
+        return path;
     }
 }
 
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(GOAP))]
 class GOAPeditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        if (GUILayout.Button("Test")) ((GOAP)target).FindBestPath();
+        GOAP t = (GOAP)target;
+        if (GUILayout.Button("Test")) t.FindBestPath();
     }
 }
+#endif
