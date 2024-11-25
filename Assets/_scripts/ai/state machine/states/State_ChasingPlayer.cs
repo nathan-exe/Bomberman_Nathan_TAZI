@@ -9,6 +9,15 @@ public class State_ChasingPlayer : StateBase
     {
     }
 
+    public override bool CanBeEnteredFromContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override GameContext SimulateOutcomeContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
 
     public override void OnEntered()
     {
@@ -22,6 +31,8 @@ public class State_ChasingPlayer : StateBase
         machine.Sensor.OnPlayerMoved -= GoToPlayer;
         machine.Sensor.OnAgentMoved -= TryToPlaceBombs;
     }
+
+    
 
     public override void Update()
     {

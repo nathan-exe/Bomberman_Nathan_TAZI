@@ -7,6 +7,16 @@ public class State_Win : StateBase
 {
     public State_Win(StateMachine sm) : base(sm) { }
 
+    public override bool CanBeEnteredFromContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override GameContext SimulateOutcomeContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void OnEntered()
     {
         Time.timeScale = 0;
@@ -16,6 +26,8 @@ public class State_Win : StateBase
     public override void OnExited()
     {
     }
+
+    
 
     public override void Update()
     {

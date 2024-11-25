@@ -22,8 +22,11 @@ public class Astar : PathFinder
     {
         if(from == to) return new Stack<AstarNode>();
 
+
         ResetNodes();
         List<AstarNode> _openNodes = new();
+        AstarNode TargetIfNoPathFound = from; //utilisé si la cible est incaccessible
+
         //parcourt le premier noeud
         from.parcourir(ref _openNodes,to);
         //tant que la cible n'est pas trouvée
@@ -33,11 +36,15 @@ public class Astar : PathFinder
             AstarNode best = _openNodes[0];
             foreach (AstarNode node in _openNodes)
             {
-                if(node.ComputeCost(to)<best.ComputeCost(to)) best = node;
+                if(node.ComputeCost(to)< best.ComputeCost(to)) best = node;
+                if (node.ComputeCost(to) < TargetIfNoPathFound.ComputeCost(to)) TargetIfNoPathFound = node;
             }
             //parcourt le voisin le plus proche
             best.parcourir(ref _openNodes,to);
         }
+
+        //si la cible est inaccessible, il retourne le chemin vers le noeud le plus proche qu'il ait réussi à trouver
+        if (_openNodes.Count == 0 && !_openNodes.Contains(to)) return TargetIfNoPathFound.findPathToBeginning(new Stack<AstarNode>());
 
         //renvoie le chemin complet
         return to.findPathToBeginning(new Stack<AstarNode>());

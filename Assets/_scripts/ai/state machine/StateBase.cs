@@ -23,7 +23,7 @@ public abstract class StateBase
     }
 
 
-    public abstract GameContext SimulateOutcome(GameContext precedentContext);
+    public abstract GameContext SimulateOutcomeContext(GameContext precedentContext);
     public abstract bool CanBeEnteredFromContext(GameContext precedentContext);
 
 }

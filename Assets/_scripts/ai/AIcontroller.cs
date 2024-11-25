@@ -20,7 +20,6 @@ public class AiController : MonoBehaviour
     Stack<AstarNode> _path = new();
     Task _currentMovementTask;
 
-
     /// <summary>
     /// change la destination vers laquelle se deplace le bonhomme et recalcule le chemin
     /// </summary>

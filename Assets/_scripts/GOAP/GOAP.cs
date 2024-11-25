@@ -8,42 +8,57 @@ public class GOAP : MonoBehaviour
 
     [SerializeField] StateMachine stateMachine;
     [SerializeField] AiSensor sensor;
+    [SerializeField] Astar astar;
 
-    public goapAstarNode CollectingBombs;
-    public goapAstarNode FleeingBombs;
-    public goapAstarNode ChasingPlayer;
-
-    Astar astar;
+    public goapAstarNode CollectingBombs, FleeingBombs, ChasingPlayer, Win, Death;
 
     goapAstarNode currentNode;
 
+    [Header("Tests values")]
+    GameContext ctx;
+
     private void Awake()
     {
-        InstantiateStates();
-        LinkStates();
+        InstantiateNodes();
+        LinkNodes();
     }
 
-    void InstantiateStates()
+    void InstantiateNodes()
     {
         CollectingBombs = new(stateMachine.S_CollectingBombs, this);
         FleeingBombs = new(stateMachine.S_FleeingBomb, this);
         ChasingPlayer = new(stateMachine.S_ChasingPlayer, this);
+        Death = new(stateMachine.S_ChasingPlayer, this);
+        Win = new(stateMachine.S_ChasingPlayer, this);
     }
 
-    void LinkStates()
+    void LinkNodes()
     {
-        CollectingBombs.Neighbours = new List<AstarNode>() {FleeingBombs,ChasingPlayer};
-        ChasingPlayer.Neighbours = new List<AstarNode>() {CollectingBombs,FleeingBombs};
+        CollectingBombs.Neighbours = new List<AstarNode>() { FleeingBombs,ChasingPlayer,Death,Win };
+        ChasingPlayer.Neighbours = new List<AstarNode>() { CollectingBombs, FleeingBombs,Death, Win };
+        FleeingBombs.Neighbours = new List<AstarNode>() { CollectingBombs, ChasingPlayer, Death, Win };
+        Win.Neighbours = new List<AstarNode>() { CollectingBombs, FleeingBombs, ChasingPlayer, Death };
+        Death.Neighbours = new List<AstarNode>() { CollectingBombs, FleeingBombs, ChasingPlayer, Win };
     }
 
-    GameContext GetCurrentGameState()
+    void ResetAllNodes()
     {
-        return new(); //@temp
+        CollectingBombs.resetNode();
+        FleeingBombs.resetNode();
+        ChasingPlayer.resetNode();
+        Death.resetNode();
+        Win.resetNode();
+    }
+
+    public GameContext GetCurrentGameContext()
+    {
+        return ctx; //@temp
     }
 
     public Stack<AstarNode> FindBestPath()
     {
-        currentNode.SimulatedOutcome = GetCurrentGameState();
+        ResetAllNodes();
+        //currentNode.SimulatedOutcomeContext = GetCurrentGameContext();
         return astar.ComputePath(currentNode,Win);
     }
 }

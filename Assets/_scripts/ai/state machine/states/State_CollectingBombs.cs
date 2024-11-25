@@ -8,6 +8,11 @@ public class State_CollectingBombs : StateBase
     AstarNode _currentTarget;
     public State_CollectingBombs(StateMachine sm) : base(sm) { }
 
+    public override bool CanBeEnteredFromContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void OnEntered()
     {
         FindPathToNearestBomb();
@@ -15,12 +20,17 @@ public class State_CollectingBombs : StateBase
         machine.Sensor.OnBombPickedUpByPlayer += FindPathToNearestBomb;
         machine.Sensor.OnBombPickedUpByAgent += FindPathToNearestBomb;
     }
-
+    public override GameContext SimulateOutcomeContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
     public override void OnExited()
     {
         machine.Sensor.OnBombPickedUpByPlayer -= FindPathToNearestBomb;
         machine.Sensor.OnBombPickedUpByAgent -= FindPathToNearestBomb;
     }
+
+
 
     public override void Update()
     {

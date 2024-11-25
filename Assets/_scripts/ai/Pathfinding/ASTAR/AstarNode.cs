@@ -32,7 +32,7 @@ public abstract class AstarNode
     /// <summary>
     /// remet le noeud à 0 : non visité et blanc
     /// </summary>
-    public void resetNode()
+    public virtual void resetNode()
     {
         g = 0;
         state = NodeState.notVisitedYet;

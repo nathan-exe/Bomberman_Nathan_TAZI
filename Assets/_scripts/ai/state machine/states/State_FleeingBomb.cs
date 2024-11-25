@@ -49,4 +49,14 @@ public class State_FleeingBomb : StateBase
             if (safeTiles.Count > 0) machine.Controller.SetDestination(Graph.Instance.Nodes[safeTiles[Random.Range(0, safeTiles.Count)]]);
         }
     }
+
+    public override GameContext SimulateOutcomeContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool CanBeEnteredFromContext(GameContext precedentContext)
+    {
+        throw new System.NotImplementedException();
+    }
 }

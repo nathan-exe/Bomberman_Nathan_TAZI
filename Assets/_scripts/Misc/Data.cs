@@ -12,6 +12,14 @@ public struct GameContext//recalculer le pathfinding des que ça change
     public int PlayerHp;
     public int AgentBombCount;
     public float DistanceToPlayer;
+
+    public GameContext(int agentHp, int playerHp, int agentBombCount, float distanceToPlayer)
+    {
+        AgentHp = agentHp;
+        PlayerHp = playerHp;
+        AgentBombCount = agentBombCount;
+        DistanceToPlayer = distanceToPlayer;
+    }
 }
 
 
