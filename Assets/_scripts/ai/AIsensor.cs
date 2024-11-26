@@ -88,6 +88,21 @@ public class AiSensor : MonoBehaviour
     }
 
     /// <summary>
+    /// compte le nombre de bombes dangereuses dans un rayon de 3 cases autour du point
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
+    public int CountTickingBombsAroundPoint(Vector2 point)
+    {
+        int c = 0;
+        foreach(Collider2D col in Physics2D.OverlapCircleAll(point.Round(), 3, LayerMask.GetMask("Solid")))
+        {
+            if (col.GetComponent<Bomb>()) c++;
+        }
+        return c;
+    }
+
+    /// <summary>
     /// retourne la liste des bombes pouvant potentiellement faire des degats au bot si il est sur le point donné
     /// </summary>
     /// <returns></returns>
@@ -115,7 +130,12 @@ public class AiSensor : MonoBehaviour
             if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) output.Add(bomb);
         }
     }
-
+    
+    /// <summary>
+    /// retourne true si le bonhomme peut marcher sur la case sans être touché par une bombe
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     public bool IsTileSafe(Vector2 point)
     {
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)

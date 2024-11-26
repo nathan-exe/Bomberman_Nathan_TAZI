@@ -27,15 +27,19 @@ public class State_ChasingPlayer : StateBase
         GoToPlayer();
         machine.Sensor.OnPlayerMoved += GoToPlayer;
         machine.Sensor.OnAgentMoved += TryToPlaceBombs;
+        machine.Controller.OnIdle += GoToPlayer;
+
     }
 
     public override void OnExited()
     {
         machine.Sensor.OnPlayerMoved -= GoToPlayer;
         machine.Sensor.OnAgentMoved -= TryToPlaceBombs;
+        machine.Controller.OnIdle -= GoToPlayer;
+
     }
 
-    
+
 
     public override void Update()
     {

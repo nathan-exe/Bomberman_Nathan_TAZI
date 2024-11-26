@@ -20,6 +20,8 @@ public class AiController : MonoBehaviour
     Stack<AstarNode> _path = new();
     Task _currentMovementTask;
 
+    public event Action OnIdle;
+
     /// <summary>
     /// change la destination vers laquelle se deplace le bonhomme et recalcule le chemin
     /// </summary>
@@ -43,10 +45,18 @@ public class AiController : MonoBehaviour
     private void Update()
     {
         //se déplace constamment sur le chemin.
-        if ((_currentMovementTask == null||_currentMovementTask.IsCompleted) && _path.Count > 0)
+        if ((_currentMovementTask == null || _currentMovementTask.IsCompleted))
         {
-            _currentMovementTask = _movement.MoveToPoint((TileAstarNode)_path.Pop(), _movement._moveSpeed, true);
+            if ( _path.Count > 0)
+            {
+                _currentMovementTask = _movement.MoveToPoint((TileAstarNode)_path.Pop(), _movement._moveSpeed, true);
+            }
+            else
+            {
+                OnIdle?.Invoke();
+            }
         }
+        
     }
 
     private void Awake()

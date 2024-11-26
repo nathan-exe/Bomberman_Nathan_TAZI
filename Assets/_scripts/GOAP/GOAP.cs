@@ -55,6 +55,7 @@ public class GOAP : MonoBehaviour
         {
             CurrentNode = (goapAstarNode)path.Pop();
             stateMachine.transitionTo(CurrentNode.State);
+            //EditorApplication.isPaused = true;
         }
     }
 
@@ -91,8 +92,8 @@ public class GOAP : MonoBehaviour
         ctx.AgentBombCount = sensor.AgentBombCount;
         ctx.PlayerBombCount = sensor.PlayerBombCount;
 
-        ctx.DangerousBombsAroundAgent = sensor.FindTickingBombsAroundPoint((Vector2)sensor.AgentPosition).Count;
-        ctx.DangerousBombsAroundPlayer = sensor.FindTickingBombsAroundPoint((Vector2)sensor.AgentPosition).Count;
+        ctx.DangerousBombsAroundAgent = sensor.CountTickingBombsAroundPoint((Vector2)sensor.AgentPosition);
+        ctx.DangerousBombsAroundPlayer = sensor.CountTickingBombsAroundPoint((Vector2)sensor.AgentPosition);
         Debug.Log(sensor.AgentHP);
         return ctx; 
     }

@@ -36,7 +36,6 @@ public class Move : MonoBehaviour
         float endTime = Time.time+duration;
 
         CurrentNode = node;
-        OnMove?.Invoke();
         while (Time.time < endTime)
         {
             if (!Application.isPlaying) return;
@@ -47,6 +46,8 @@ public class Move : MonoBehaviour
 
             await Task.Yield();
         }
+        OnMove?.Invoke();
+
         transform.position = (Vector3)(Vector2)node.transform.position + Vector3.forward * -2;
         transform.rotation = targetRotation;
 
