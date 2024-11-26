@@ -22,7 +22,7 @@ public class GOAP : MonoBehaviour
 
     
 
-    private void Awake()
+    private void Start()
     {
         InstantiateNodes();
         LinkNodes();
@@ -64,6 +64,7 @@ public class GOAP : MonoBehaviour
         ResetAllNodes();
         CurrentNode.UpdateSimulatedOutcome();
         Stack<AstarNode> path = astar.ComputePath(CurrentNode, Win);
+        ((goapAstarNode)path.ToArray()[path.Count - 1]).Visu.SetRed();
         return path;
     }
 }

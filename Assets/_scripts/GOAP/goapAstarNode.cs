@@ -43,10 +43,10 @@ public class goapAstarNode : AstarNode
             //chaque noeud simule son contexte de sortie à partir du contexte du noeud precedent
             SimulatedOutcomeContext = State.SimulateOutcomeContext(((goapAstarNode)previousNode).SimulatedOutcomeContext);
         } 
-        //else
+        else
         {
             //le noeud de départ récupère le vrai contexte du jeu
-            SimulatedOutcomeContext = State.SimulateOutcomeContext(engine.GetCurrentGameContext());
+            SimulatedOutcomeContext = /*State.SimulateOutcomeContext(*/engine.GetCurrentGameContext();//); 
         }
         Visu.UpdateUI();
     }
