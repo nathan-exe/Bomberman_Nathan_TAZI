@@ -18,14 +18,17 @@ public class AiSensor : MonoBehaviour
     [SerializeField] BombBag _playerBombBag;
     [SerializeField] Move _playerMovement;
     [SerializeField] Move _agentMovement;
+    [SerializeField] HealthComponent _agentHealth;
+    [SerializeField] HealthComponent _playerHealth;
 
 
     //getters
     public int PlayerHP => _playerHPcomponent.HP;
     public int AgentHP => _playerHPcomponent.HP;
     public int AgentBombCount => _AiBombBag.BombStack.Count;
-
+    public int PlayerBombCount => _playerBombBag.BombStack.Count;
     public Vector2Int PlayerPosition => _playerMovement.CurrentNode.pose;
+    public Vector2Int AgentPosition => _agentMovement.CurrentNode.pose;
 
     //events
     public event Action OnBombPickedUpByAgent;
@@ -36,6 +39,9 @@ public class AiSensor : MonoBehaviour
 
     public event Action OnBombPlacedByAgent;
     public event Action OnBombPlacedByPlayer;
+
+    public event Action OnPlayerHealthUpdated;
+    public event Action OnAgentHealthUpdated;
     /// <summary>
     /// trouve la bombe ramassable la plus proche
     /// </summary>
@@ -132,7 +138,7 @@ public class AiSensor : MonoBehaviour
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
             Vector2Int pose = point.RoundToV2Int() + offset;
-            if(Graph.Instance.Nodes.ContainsKey(pose)) output.Add(point.RoundToV2Int() + offset);
+            if(Graph.Instance.Nodes.ContainsKey(pose) && Graph.Instance.Nodes[pose].isActive()) output.Add(point.RoundToV2Int() + offset);
         }
         return output;
     }
@@ -146,5 +152,8 @@ public class AiSensor : MonoBehaviour
         _agentMovement.OnMove += () => OnAgentMoved?.Invoke();
         _AiBombBag.OnBombPlaced += () => OnBombPlacedByAgent?.Invoke();
         _playerBombBag.OnBombPlaced += () => OnBombPlacedByPlayer?.Invoke();
+
+        _playerHealth.OnHealthUpdated += (int hp) => OnPlayerHealthUpdated?.Invoke();
+        _agentHealth.OnHealthUpdated += (int hp) => OnAgentHealthUpdated?.Invoke();
     }
 }

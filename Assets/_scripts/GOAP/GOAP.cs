@@ -13,20 +13,45 @@ public class GOAP : MonoBehaviour
     [SerializeField] Astar astar;
 
     public goapAstarNode CollectingBombs, FleeingBombs, ChasingPlayer, Win, Death;
-    public GoapNodeVisualizer Visu_CollectingBombs, Visu_FleeingBombs, Visu_ChasingPlayer, Visu_Win, Visu_Death;
+
+    [Header("Visuals")]
+    [SerializeField] GoapNodeVisualizer Visu_CollectingBombs;
+    [SerializeField] GoapNodeVisualizer Visu_FleeingBombs, Visu_ChasingPlayer, Visu_Win, Visu_Death;
 
     public goapAstarNode  CurrentNode { get; private set; }
-
-    [Header("Tests values")]
-    [SerializeField] GameContext ctx;
-
-    
 
     private void Start()
     {
         InstantiateNodes();
         LinkNodes();
         CurrentNode = CollectingBombs;
+        SetUpEvents();
+    }
+
+    public void SetUpEvents()
+    {
+        sensor.OnBombPickedUpByAgent += OnContextChanged;
+        sensor.OnBombPickedUpByPlayer += OnContextChanged;
+        sensor.OnBombPlacedByAgent += OnContextChanged;
+        sensor.OnBombPlacedByPlayer += OnContextChanged;
+        sensor.OnAgentHealthUpdated += OnContextChanged;
+        sensor.OnPlayerHealthUpdated += OnContextChanged;
+        //onBombExploded
+    }
+
+    void OnContextChanged()
+    {
+        chooseBestAction();
+    }
+
+    void chooseBestAction()
+    {
+        Stack<AstarNode> path = FindBestPath();
+        if (path.Count > 0)
+        {
+            CurrentNode = (goapAstarNode)path.Pop();
+            stateMachine.transitionTo(CurrentNode.State);
+        }
     }
 
     void InstantiateNodes()
@@ -56,7 +81,16 @@ public class GOAP : MonoBehaviour
 
     public GameContext GetCurrentGameContext()
     {
-        return ctx; //@temp
+        GameContext ctx = new();
+        ctx.PlayerHp = sensor.PlayerHP;
+        ctx.AgentHp = sensor.AgentHP;
+        ctx.AgentBombCount = sensor.AgentBombCount;
+        ctx.PlayerBombCount = sensor.PlayerBombCount;
+
+        ctx.DangerousBombsAroundAgent = sensor.FindTickingBombsAroundPoint((Vector2)sensor.AgentPosition).Count;
+        ctx.DangerousBombsAroundPlayer = sensor.FindTickingBombsAroundPoint((Vector2)sensor.AgentPosition).Count;
+
+        return ctx; 
     }
 
     public Stack<AstarNode> FindBestPath()
@@ -64,7 +98,7 @@ public class GOAP : MonoBehaviour
         ResetAllNodes();
         CurrentNode.UpdateSimulatedOutcome();
         Stack<AstarNode> path = astar.ComputePath(CurrentNode, Win);
-        ((goapAstarNode)path.ToArray()[path.Count - 1]).Visu.SetRed();
+        if(path.Count>0) ((goapAstarNode)path.ToArray()[path.Count - 1]).Visu.SetRed();
         return path;
     }
 }

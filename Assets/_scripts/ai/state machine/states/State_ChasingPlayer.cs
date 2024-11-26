@@ -20,7 +20,6 @@ public class State_ChasingPlayer : StateBase
         ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer + ctx.AgentBombCount*0.5f;
         ctx.AgentBombCount -=1;
         return ctx;
-
     }
 
     public override void OnEntered()
