@@ -12,8 +12,6 @@ using UnityEngine;
 public class AiSensor : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] HealthComponent _playerHPcomponent;
-    [SerializeField] HealthComponent _AiHPcomponent;
     [SerializeField] BombBag _AiBombBag;
     [SerializeField] BombBag _playerBombBag;
     [SerializeField] Move _playerMovement;
@@ -23,8 +21,8 @@ public class AiSensor : MonoBehaviour
 
 
     //getters
-    public int PlayerHP => _playerHPcomponent.HP;
-    public int AgentHP => _playerHPcomponent.HP;
+    public int PlayerHP => _playerHealth.HP;
+    public int AgentHP => _agentHealth.HP;
     public int AgentBombCount => _AiBombBag.BombStack.Count;
     public int PlayerBombCount => _playerBombBag.BombStack.Count;
     public Vector2Int PlayerPosition => _playerMovement.CurrentNode.pose;

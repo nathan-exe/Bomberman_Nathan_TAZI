@@ -53,12 +53,10 @@ public class HealthComponent : MonoBehaviour
             if (TryGetComponent<PooledObject>(out PooledObject asPooledObject)) asPooledObject.GoBackIntoPool();
             else Destroy(gameObject);
         };
-    }
-
-    private void Start()
-    {
         HP = MaxHP;
     }
+
+
 
     public void OnBlownUp()
     {

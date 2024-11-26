@@ -26,7 +26,8 @@ public class goapAstarNode : AstarNode
     public override bool isActive()
     {
         //si le contexte simulé du noeud précédent ne permet pas de rentrer dans ce noeud-ci, alors le cout est infini
-        return previousNode == null || State.CanBeEnteredFromContext(((goapAstarNode)previousNode).SimulatedOutcomeContext) ;
+        if (previousNode == null) {/* Debug.Log("oo " + this.State.GetType().ToString());*/ return State.CanBeEnteredFromContext(SimulatedOutcomeContext); }
+        return State.CanBeEnteredFromContext(((goapAstarNode)previousNode).SimulatedOutcomeContext) ;
     }
 
     public override float ComputeCost(AstarNode target)
@@ -47,6 +48,8 @@ public class goapAstarNode : AstarNode
         {
             //le noeud de départ récupère le vrai contexte du jeu
             SimulatedOutcomeContext = /*State.SimulateOutcomeContext(*/engine.GetCurrentGameContext();//); 
+            //Debug.Log("inside : " +State.GetType() + "/ hp :" + SimulatedOutcomeContext.AgentHp.ToString());
+
         }
         Visu.UpdateUI();
     }

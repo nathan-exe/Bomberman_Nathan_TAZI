@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public delegate bool DynamicBoolean();
 

@@ -39,14 +39,17 @@ public class Astar : PathFinder
                 print("-");*/
 
                 if(node.ComputeCost(to)< best.ComputeCost(to)) best = node;
-                if (node.ComputeCost(to) < TargetIfNoPathFound.ComputeCost(to)) TargetIfNoPathFound = node;
+                if (!TargetIfNoPathFound.isActive()  || node.ComputeCost(to) < TargetIfNoPathFound.ComputeCost(to)) TargetIfNoPathFound = node;
             }
             //parcourt le voisin le plus proche
             best.parcourir(ref _openNodes,to);
         }
 
         //si la cible est inaccessible, il retourne le chemin vers le noeud le plus proche qu'il ait réussi à trouver
-        if (_openNodes.Count == 0 && !_openNodes.Contains(to)) { /*if((goapAstarNode)TargetIfNoPathFound!=null) print("couldn't reach target, chose " + ((goapAstarNode)TargetIfNoPathFound).State.GetType().ToString()+" instead");*/ return TargetIfNoPathFound.findPathToBeginning(new Stack<AstarNode>()); }
+        if (_openNodes.Count == 0 && !_openNodes.Contains(to)) {
+            /*if((goapAstarNode)TargetIfNoPathFound!=null) print("couldn't reach target, chose " + ((goapAstarNode)TargetIfNoPathFound).State.GetType().ToString()+" instead");*/
+            return TargetIfNoPathFound.findPathToBeginning(new Stack<AstarNode>());
+        }
 
         //renvoie le chemin complet
         // print();

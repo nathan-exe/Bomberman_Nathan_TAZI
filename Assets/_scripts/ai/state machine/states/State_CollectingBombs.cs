@@ -24,13 +24,15 @@ public class State_CollectingBombs : StateBase
     public override void OnEntered()
     {
         FindPathToNearestBomb();
-
+        Debug.Log("fils de pute");
         machine.Sensor.OnBombPickedUpByPlayer += FindPathToNearestBomb;
         machine.Sensor.OnBombPickedUpByAgent += FindPathToNearestBomb;
     }
     
     public override void OnExited()
     {
+        Debug.Log("enculard");
+
         machine.Sensor.OnBombPickedUpByPlayer -= FindPathToNearestBomb;
         machine.Sensor.OnBombPickedUpByAgent -= FindPathToNearestBomb;
     }
@@ -39,6 +41,7 @@ public class State_CollectingBombs : StateBase
 
     public override void Update()
     {
+        
         //throw new System.NotImplementedException();
     }
 
