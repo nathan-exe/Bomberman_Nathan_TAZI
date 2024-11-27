@@ -17,7 +17,6 @@ public class TileAstarNode : AstarNode
     public Transform transform => monoBehaviour.transform;
     public Vector2Int pose => gameObject.transform.position.RoundToV2Int();
 
-
     public const float gWheight = .3f;
 
     public override bool isActive()

@@ -17,12 +17,16 @@ public class Bomb : MonoBehaviour
     public void OnInstantiatedByPool()
     {
         TryGetComponent<PooledObject>(out _asPooledObject);
+        Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
+
     }
 
     public void OnPulledFromPool()
     {
         _explosionVisual.SetActive(false);
         StartCoroutine(ExplodeWithDelay());
+        Graph.Instance.AddNodeToGraph(transform.position.RoundToV2Int());
+
     }
 
     IEnumerator ExplodeWithDelay()

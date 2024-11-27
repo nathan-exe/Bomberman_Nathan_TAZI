@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class State_CollectingBombs : StateBase
 {
-    AstarNode _currentTarget;
     public State_CollectingBombs(StateMachine sm) : base(sm) { }
 
     public override bool CanBeEnteredFromContext(GameContext ctx)
@@ -45,15 +44,10 @@ public class State_CollectingBombs : StateBase
     }
 
     /// <summary>
-    /// trouve la bombe la plus proche et recalcule le chemin vers elle si elle a changé
+    /// trouve la bombe la plus proche et recalcule le chemin vers elle
     /// </summary>
     void FindPathToNearestBomb()
-    {
-        AstarNode nearestBomb = machine.Sensor.FindNearestBombNode();
-        if (nearestBomb  != null && (nearestBomb != _currentTarget || _currentTarget == null))
-        {
-            _currentTarget = nearestBomb;
-            machine.Controller.SetDestination(_currentTarget);
-        }
+    {        
+        machine.Controller.SetDestination(machine.Sensor.FindNearestBombNode());
     }
 }

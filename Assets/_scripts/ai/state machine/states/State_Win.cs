@@ -21,6 +21,7 @@ public class State_Win : StateBase
     {
         Time.timeScale = 0;
         Debug.Log("l'IA a gagné");
+        GameOver.Instance.triggerBotWin();
     }
 
     public override void OnExited()

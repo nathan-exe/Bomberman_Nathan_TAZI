@@ -19,6 +19,8 @@ public class State_Dead : StateBase
     public override void OnEntered()
     {
         Time.timeScale = 0;
+        GameOver.Instance.triggerPlayerWin();
+
     }
 
     public override void OnExited()
