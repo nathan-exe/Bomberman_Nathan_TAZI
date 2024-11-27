@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -22,8 +23,8 @@ public class Bomb : MonoBehaviour
     public void OnPulledFromPool()
     {
         _explosionVisual.SetActive(false);
-        Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
 
+        Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
         StartCoroutine(ExplodeWithDelay());
     }
 
