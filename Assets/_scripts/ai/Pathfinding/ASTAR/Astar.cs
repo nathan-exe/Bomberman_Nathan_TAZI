@@ -32,12 +32,6 @@ public class Astar : PathFinder
             AstarNode best = _openNodes[0];
             foreach (AstarNode node in _openNodes)
             {
-                /*print("-");
-                print("Node : " + ((goapAstarNode)node).State.GetType().ToString() +" "+ node.ComputeCost(to).ToString());
-                print("best : " + ((goapAstarNode)TargetIfNoPathFound).State.GetType().ToString()+ " " + TargetIfNoPathFound.ComputeCost(to).ToString());
-
-                print("-");*/
-
                 if(node.ComputeCost(to)< best.ComputeCost(to)) best = node;
                 if (!TargetIfNoPathFound.isActive()  || node.ComputeCost(to) < TargetIfNoPathFound.ComputeCost(to)) TargetIfNoPathFound = node;
             }
@@ -47,13 +41,10 @@ public class Astar : PathFinder
 
         //si la cible est inaccessible, il retourne le chemin vers le noeud le plus proche qu'il ait réussi à trouver
         if (_openNodes.Count == 0 && !_openNodes.Contains(to)) {
-            /*if((goapAstarNode)TargetIfNoPathFound!=null) print("couldn't reach target, chose " + ((goapAstarNode)TargetIfNoPathFound).State.GetType().ToString()+" instead");*/
             return TargetIfNoPathFound.findPathToBeginning(new Stack<AstarNode>());
         }
 
         //renvoie le chemin complet
-        // print();
-        //print("reached Target " + ((goapAstarNode)to).State.GetType().ToString());
         return to.findPathToBeginning(new Stack<AstarNode>());
     }
 

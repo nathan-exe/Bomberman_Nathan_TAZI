@@ -40,7 +40,6 @@ public class StateMachine : MonoBehaviour
 
     private void Update()
     {
-        if (currentState != null) print(currentState.GetType());
         if(currentState!=null) currentState.Update();
     }
 

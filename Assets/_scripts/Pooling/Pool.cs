@@ -88,9 +88,22 @@ public class Pool : MonoBehaviour
     /// </summary>
     public GameObject PullObjectFromPool(Vector3 Position, Transform Parent = null)
     {
-        GameObject o = PullObjectFromPool(Parent);
+        Assert.IsTrue(_freeIndices.Count > 0, "Pool is empty!");
+
+        //pioche le premier indice libre dans la pool.
+        int id = _freeIndices[0];
+        _freeIndices.Remove(id);
+
+        //activation de l'objet sélectionné
+        PooledObject o = _instances[id];
+        o.IsInPool = false;
+        o.gameObject.SetActive(true);
+        o.transform.parent = Parent;
         o.transform.position = Position;
-        return o;
+
+        //message optionnel
+        o.gameObject.SendMessage("OnPulledFromPool", SendMessageOptions.DontRequireReceiver);
+        return o.gameObject;
     }
 
     /// <summary>

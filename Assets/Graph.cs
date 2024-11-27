@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -45,8 +46,8 @@ public class Graph : MonoBehaviour
     //fonctions pratiques
     public void AddNodeToGraph(Vector2Int position)
     {
-        Nodes[position].gameObject.SetActive(true);
-        FreeNodes.Add(Nodes[position]);
+        Nodes[position].monoBehaviour.gameObject.SetActive(true);
+        if (!FreeNodes.Contains(Nodes[position]))FreeNodes.Add(Nodes[position]);
     }
 
     public bool HasNodeAtPosition(Vector2Int position)
@@ -56,7 +57,7 @@ public class Graph : MonoBehaviour
 
     public void RemoveNodeFromGraph(TileAstarNode node)
     {
-        node.gameObject.SetActive(false);
+        node.monoBehaviour.gameObject.SetActive(false);
         FreeNodes.Remove(node);
     }
 

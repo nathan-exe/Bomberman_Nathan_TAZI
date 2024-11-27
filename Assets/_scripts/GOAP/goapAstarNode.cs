@@ -26,7 +26,7 @@ public class goapAstarNode : AstarNode
     public override bool isActive()
     {
         //si le contexte simulé du noeud précédent ne permet pas de rentrer dans ce noeud-ci, alors le cout est infini
-        if (previousNode == null) {/* Debug.Log("oo " + this.State.GetType().ToString());*/ return State.CanBeEnteredFromContext(SimulatedOutcomeContext); }
+        if (previousNode == null) { return State.CanBeEnteredFromContext(SimulatedOutcomeContext); }
         return State.CanBeEnteredFromContext(((goapAstarNode)previousNode).SimulatedOutcomeContext) ;
     }
 

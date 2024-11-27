@@ -17,21 +17,21 @@ public class Bomb : MonoBehaviour
     public void OnInstantiatedByPool()
     {
         TryGetComponent<PooledObject>(out _asPooledObject);
-        Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
-
     }
 
     public void OnPulledFromPool()
     {
         _explosionVisual.SetActive(false);
-        StartCoroutine(ExplodeWithDelay());
-        Graph.Instance.AddNodeToGraph(transform.position.RoundToV2Int());
+        print("--");
+        print(transform.position.RoundToV2Int());
+        Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
 
+        StartCoroutine(ExplodeWithDelay());
     }
 
     IEnumerator ExplodeWithDelay()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         SendHitMessagesToSurroundingObjects();
 
@@ -39,6 +39,7 @@ public class Bomb : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         _explosionVisual.SetActive(false);
 
+        Graph.Instance.AddNodeToGraph(transform.position.RoundToV2Int());
         GetComponent<PooledObject>().GoBackIntoPool();
     }
 

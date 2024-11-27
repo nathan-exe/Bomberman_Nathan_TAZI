@@ -94,7 +94,6 @@ public class GOAP : MonoBehaviour
 
         ctx.DangerousBombsAroundAgent = sensor.CountTickingBombsAroundPoint((Vector2)sensor.AgentPosition);
         ctx.DangerousBombsAroundPlayer = sensor.CountTickingBombsAroundPoint((Vector2)sensor.AgentPosition);
-        Debug.Log(sensor.AgentHP);
         return ctx; 
     }
 

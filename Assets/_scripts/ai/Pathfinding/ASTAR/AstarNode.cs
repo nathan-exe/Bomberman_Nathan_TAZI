@@ -93,7 +93,6 @@ public abstract class AstarNode
     public Stack<AstarNode> findPathToBeginning(Stack<AstarNode> l)
     {
         if (previousNode == null) return l;
-        //Debug.LogWarning(this.GetType());
         l.Push(this);
         return previousNode.findPathToBeginning(l);
     }

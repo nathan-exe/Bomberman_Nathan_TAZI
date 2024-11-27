@@ -39,8 +39,6 @@ public class State_ChasingPlayer : StateBase
 
     }
 
-
-
     public override void Update()
     {
     }
@@ -59,11 +57,16 @@ public class State_ChasingPlayer : StateBase
         }
     }
 
+    /// <summary>
+    /// a 2 chances sur 3 de placer une bombe 
+    /// </summary>
     void TryToPlaceBombs()
     {
         if((machine.transform.position-machine.Sensor.PlayerPosition.ToVector3()).sqrMagnitude<= 9)
         {
-            if (Random.value > 0.5f)
+            //pour aller plus loin : faire que la chance dépende du nombre de murs autour,
+            //pour l'encourager à bloquer les passages étroits
+            if (Random.value > 0.3f) 
             {
                 machine.Controller.PlaceBomb();
             }
