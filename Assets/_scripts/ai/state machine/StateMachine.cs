@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
+/// <summary>
+/// la machine à état du bot.
+/// </summary>
 public class StateMachine : MonoBehaviour
 {
 
@@ -31,6 +34,10 @@ public class StateMachine : MonoBehaviour
         transitionTo(S_CollectingBombs);
     }
 
+    /// <summary>
+    /// transitionne vers un autre état
+    /// </summary>
+    /// <param name="to"></param>
     public void transitionTo(StateBase to)
     {
         if(currentState!=null) currentState.OnExited();

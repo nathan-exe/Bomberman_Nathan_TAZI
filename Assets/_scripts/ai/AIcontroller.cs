@@ -8,13 +8,16 @@ using UnityEditor;
 using UnityEngine;
 
 
-
+/// <summary>
+/// ce monobehaviour contient des méthodes publiques permettant 
+/// de faire réaliser des actions au bot.
+/// </summary>
 public class AiController : MonoBehaviour
 {
     //references
     Move _movement;
     BombBag _bombBag;
-    [SerializeField] PathFinder _pathfinder;
+    [SerializeField] Astar _pathfinder;
 
     //mouvement
     Stack<AstarNode> _path = new();
@@ -23,7 +26,7 @@ public class AiController : MonoBehaviour
     public event Action OnIdle;
 
     /// <summary>
-    /// change la destination vers laquelle se deplace le bonhomme et recalcule le chemin
+    /// change la destination vers laquelle se deplace le bonhomme et recalcule le chemin.
     /// </summary>
     /// <param name="targetNode"></param>
     public void SetDestination(AstarNode targetNode)
@@ -31,12 +34,9 @@ public class AiController : MonoBehaviour
         _path = _pathfinder.ComputePath(_movement.CurrentNode, targetNode);
     }
 
-    public void Move(Vector2Int offset)
-    {
-        _path.Clear();
-        _=_movement.MoveToPoint(Graph.Instance.Nodes[ transform.position.RoundToV2Int() + offset],_movement._moveSpeed);
-    }
-
+    /// <summary>
+    /// pose une bombe par terre
+    /// </summary>
     public void PlaceBomb()
     {
         _bombBag.TryToUseBomb();
@@ -44,7 +44,7 @@ public class AiController : MonoBehaviour
 
     private void Update()
     {
-        //se déplace constamment sur le chemin.
+        //il se déplace constamment le long du chemin,jusqu'à ce qu'il soit vide.
         if ((_currentMovementTask == null || _currentMovementTask.IsCompleted))
         {
             if ( _path.Count > 0)

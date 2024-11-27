@@ -13,8 +13,8 @@ public class State_CollectingBombs : StateBase
     }
     public override GameContext SimulateOutcomeContext(GameContext ctx)
     {
-        ctx.AgentHp -= ctx.DangerousBombsAroundAgent + ctx.PlayerBombCount*0.5f;
-        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer;//*weight
+        ctx.AgentHp -= ctx.DangerousBombsAroundAgent + ctx.PlayerBombCount*0.5f; //chaque bombe dans l'inventaire du joueur aurait une chance sur deux de faire des dégats au bot
+        ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer;
 
         ctx.AgentBombCount++;
         return ctx;
@@ -39,8 +39,6 @@ public class State_CollectingBombs : StateBase
 
     public override void Update()
     {
-        
-        //throw new System.NotImplementedException();
     }
 
     /// <summary>

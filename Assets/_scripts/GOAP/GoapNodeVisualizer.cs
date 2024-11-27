@@ -14,7 +14,7 @@ public class GoapNodeVisualizer : MonoBehaviour
         _description.text = Node.SimulatedOutcomeContext.ToString();
        
 
-        if (Node == Node.engine.CurrentNode)
+        if (Node == Node.Engine.CurrentNode)
         {
             _image.color = Color.cyan;
         }

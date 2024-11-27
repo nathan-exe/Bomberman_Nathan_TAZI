@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// ce monobehaviour sert à gérer les points de vie d'une unité.
+/// </summary>
 public class HealthComponent : MonoBehaviour
 {
 
@@ -26,7 +29,7 @@ public class HealthComponent : MonoBehaviour
     public event Action OnDamageTaken;
 
     /// <summary>
-    /// fait des dégats au joueur. peut etre annulé.
+    /// fait des dégats au joueur.
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(int damage)
@@ -36,7 +39,7 @@ public class HealthComponent : MonoBehaviour
     }
 
     /// <summary>
-    /// soigne le joueur. peut etre annulé.
+    /// soigne le joueur.
     /// </summary>
     /// <param name="heal"></param>
     public void Heal(int heal)
@@ -55,7 +58,6 @@ public class HealthComponent : MonoBehaviour
         };
         HP = MaxHP;
     }
-
 
 
     public void OnBlownUp()

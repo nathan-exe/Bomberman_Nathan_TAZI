@@ -115,10 +115,16 @@ PrefabInstance:
       addedObject: {fileID: 7604890770346465802}
     - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
       insertIndex: 3
-      addedObject: {fileID: 1517562421362719962}
+      addedObject: {fileID: 6904736723048099600}
     - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
       insertIndex: 4
+      addedObject: {fileID: 1517562421362719962}
+    - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
+      insertIndex: 5
       addedObject: {fileID: 9196103189294640979}
+    - targetCorrespondingSourceObject: {fileID: 1428708085409891617, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6186511862249640886}
   m_SourcePrefab: {fileID: 100100000, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}
 --- !u!114 &245740932397109843 stripped
 MonoBehaviour:
@@ -161,6 +167,86 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sensor: {fileID: 9196103189294640979}
   Controller: {fileID: 1517562421362719962}
+--- !u!114 &6904736723048099600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135380099406932707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade7817f1917d1e44bde9311d131aa7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachine: {fileID: 7604890770346465802}
+  sensor: {fileID: 9196103189294640979}
+  astar: {fileID: 6186511862249640886}
+  CollectingBombs:
+    VisitedState: 0
+    g: 0
+    engine: {fileID: 0}
+    SimulatedOutcomeContext:
+      AgentHp: 0
+      PlayerHp: 0
+      AgentBombCount: 0
+      PlayerBombCount: 0
+      DangerousBombsAroundAgent: 0
+      DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
+  FleeingBombs:
+    VisitedState: 0
+    g: 0
+    engine: {fileID: 0}
+    SimulatedOutcomeContext:
+      AgentHp: 0
+      PlayerHp: 0
+      AgentBombCount: 0
+      PlayerBombCount: 0
+      DangerousBombsAroundAgent: 0
+      DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
+  ChasingPlayer:
+    VisitedState: 0
+    g: 0
+    engine: {fileID: 0}
+    SimulatedOutcomeContext:
+      AgentHp: 0
+      PlayerHp: 0
+      AgentBombCount: 0
+      PlayerBombCount: 0
+      DangerousBombsAroundAgent: 0
+      DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
+  Win:
+    VisitedState: 0
+    g: 0
+    engine: {fileID: 0}
+    SimulatedOutcomeContext:
+      AgentHp: 0
+      PlayerHp: 0
+      AgentBombCount: 0
+      PlayerBombCount: 0
+      DangerousBombsAroundAgent: 0
+      DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
+  Death:
+    VisitedState: 0
+    g: 0
+    engine: {fileID: 0}
+    SimulatedOutcomeContext:
+      AgentHp: 0
+      PlayerHp: 0
+      AgentBombCount: 0
+      PlayerBombCount: 0
+      DangerousBombsAroundAgent: 0
+      DangerousBombsAroundPlayer: 0
+    Visu: {fileID: 0}
+  Visu_CollectingBombs: {fileID: 0}
+  Visu_FleeingBombs: {fileID: 0}
+  Visu_ChasingPlayer: {fileID: 0}
+  Visu_Win: {fileID: 0}
+  Visu_Death: {fileID: 0}
 --- !u!114 &1517562421362719962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,12 +272,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f6379f322ae9b4aa6441fc660b5e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHPcomponent: {fileID: 0}
-  _AiHPcomponent: {fileID: 245740932397109843}
   _AiBombBag: {fileID: 840819858634351538}
   _playerBombBag: {fileID: 0}
   _playerMovement: {fileID: 0}
   _agentMovement: {fileID: 3811672991364141419}
+  _agentHealth: {fileID: 245740932397109843}
+  _playerHealth: {fileID: 0}
+--- !u!114 &6186511862249640886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135380099406932707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a926f267aa6bc7a40a115d0a77b639ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _graph: {fileID: 0}
 --- !u!114 &3811672991364141419 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2952017350084443817, guid: 348aacedacc22fc4cbbe66dbd3e57831, type: 3}

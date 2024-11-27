@@ -7,12 +7,14 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Astar : PathFinder
+/// <summary>
+/// ce script implémente l'algo de pathfinding A* de manière générique.
+/// </summary>
+public class Astar : MonoBehaviour
 {
-    [SerializeField] Transform _graph;
     List<AstarNode> _allNodes = new();
 
-    public override Stack<AstarNode> ComputePath(AstarNode from, AstarNode to)
+    public Stack<AstarNode> ComputePath(AstarNode from, AstarNode to)
     {
         if(from == to) return new Stack<AstarNode>();
 

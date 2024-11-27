@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// ce script est attaché aux bombes ramassables par les joueurs
+/// </summary>
 public class BombItem : Item
 {
     public static List<BombItem> freeBombs = new();

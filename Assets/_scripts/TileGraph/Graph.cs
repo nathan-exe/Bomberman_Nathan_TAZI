@@ -6,45 +6,47 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 
+/// <summary>
+/// ce MonoBehaviour contient tous les noeuds utilisés par le A* pour le pathfinding sur la tilemap.
+/// il y'a des noeuds sur absolument tout la zone du jeu,
+/// mais ceux positionnés sur des tiles solides de la tilemap sont désactivés.
+/// </summary>
 public class Graph : MonoBehaviour
 {
 
     [SerializeField] GraphBuilder _graphBuilder;
 
+    /// <summary>
+    /// le dictionnaire qui contient tous les noeuds.
+    /// la clé est un vector2Int qui représente la position du noeud dans le monde.
+    /// </summary>
     public Dictionary<Vector2Int, TileAstarNode> Nodes = new();
+
+    /// <summary>
+    /// la liste de tous les noeuds libres, sans
+    /// </summary>
     public List<TileAstarNode> FreeNodes { get; private set; } = new();
+
+    public const string NodeLayer = "graph";
+
 
     //singleton
     private static Graph _instance;
     public static Graph Instance => _instance;
-
-    public const string NodeLayer = "graph";
 
     private void Awake()
     {
         if(_instance != null && _instance!=this) Destroy(_instance.gameObject); 
         _instance = this;
 
-
         //génération du dictionnaire de noeuds
-
-        _graphBuilder.BuildGraph();
-
         Nodes.Clear();
         FreeNodes.Clear();
-        foreach(Transform t in transform)
-        {
-            if (t.gameObject.TryGetComponent<NodeContainer>(out NodeContainer n)) 
-            {
-                n.node.monoBehaviour = n;
-                Nodes.Add(n.node.pose, n.node);
-            }
-            if (t.gameObject.activeSelf) FreeNodes.Add(n.node);
-        }
+        _graphBuilder.BuildGraph();
     }
 
     //fonctions pratiques
-    public void AddNodeToGraph(Vector2Int position)
+    public void ActivateNodeAtPosition(Vector2Int position)
     {
         Nodes[position].monoBehaviour.gameObject.SetActive(true);
         if (!FreeNodes.Contains(Nodes[position]))FreeNodes.Add(Nodes[position]);
@@ -55,15 +57,15 @@ public class Graph : MonoBehaviour
         return Nodes.ContainsKey(position) && Nodes[position].gameObject.activeSelf;
     }
 
-    public void RemoveNodeFromGraph(TileAstarNode node)
+    public void DisableNode(TileAstarNode node)
     {
         node.monoBehaviour.gameObject.SetActive(false);
         FreeNodes.Remove(node);
     }
 
-    public void RemoveNodeFromGraph(Vector2Int position)
+    public void DisableNode(Vector2Int position)
     {
-        if(Nodes.ContainsKey(position)) RemoveNodeFromGraph (Nodes[position]);
+        if(Nodes.ContainsKey(position)) DisableNode (Nodes[position]);
     }
 
 }

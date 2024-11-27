@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class State_FleeingBomb : StateBase
 {
-    private List<Bomb> _nearbyBombs = new();
+    private List<TickingBomb> _nearbyBombs = new();
     public State_FleeingBomb(StateMachine sm) : base(sm)
     {
     }
@@ -17,11 +17,10 @@ public class State_FleeingBomb : StateBase
     }
     public override GameContext SimulateOutcomeContext(GameContext ctx)
     {
-        ctx.AgentHp += ctx.DangerousBombsAroundAgent ;//on met "+=" pour compenser les PVs qu'il a perdu sur la simulation d'avant en restant à coté de la bombe
+        //ctx.AgentHp += ctx.DangerousBombsAroundAgent ; //on met "+=" pour compenser les PVs qu'il a perdu sur la simulation d'avant en restant à coté de la bombe
         ctx.PlayerHp -= ctx.DangerousBombsAroundPlayer ;
         return ctx;
     }
-
 
     public override void OnEntered()
     {
@@ -44,18 +43,18 @@ public class State_FleeingBomb : StateBase
     {
     }
 
+    /// <summary>
+    /// si il est dans le rayon d'action d'une bombe,
+    /// il se déplace vers une case libre et safe aléatoire
+    /// </summary>
     public void ReactToNearbyBombs()
     {
-        //machine.Controller.SetDestination(Graph.Instance.Nodes[machine.transform.position.RoundToV2Int()+Vector2Int.up]);
-        //si il est dans le rayon d'action d'une bombe
-
-        //il se déplace vers une case libre et safe aléatoire
+        
         List<Vector2Int> freeTiles = machine.Sensor.FindFreeNodesAroundPoint(machine.Sensor.AgentPosition);
         foreach (Vector2Int tile in freeTiles) Debug.DrawRay(tile.ToVector3(), Vector3.up*0.3f, Color.white,1);
 
         List<Vector2Int> safeTiles = new();
-        foreach (Vector2Int tile in freeTiles) if (machine.Sensor.IsTileSafe(tile)) safeTiles.Add(tile);
-            
+        foreach (Vector2Int tile in freeTiles) if (machine.Sensor.IsTileSafe(tile)) safeTiles.Add(tile); 
         foreach (Vector2Int tile in safeTiles) Debug.DrawRay(tile.ToVector3(), Vector3.up * 0.1f, Color.red, 1);
 
         if (safeTiles.Count > 0) machine.Controller.SetDestination(Graph.Instance.Nodes[safeTiles[Random.Range(0, safeTiles.Count)]]);

@@ -8,8 +8,10 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Scripting;
 
-public delegate bool DynamicBoolean();
 
+/// <summary>
+/// ce script permet de déplacer un bonhomme sur le graph.
+/// </summary>
 public class Move : MonoBehaviour
 {
     public TileAstarNode CurrentNode { get; private set; }
@@ -41,6 +43,8 @@ public class Move : MonoBehaviour
             if (!Application.isPlaying) return;
             float alpha = Mathf.InverseLerp(startTime, endTime, Time.time);
             if(smoothstep) alpha = Mathf.SmoothStep(0, 1, alpha);
+
+            //interpolation de la position et de la rotation
             transform.position = (Vector3) Vector2.Lerp(start, (Vector2)node.transform.position, alpha) + Vector3.forward * -2;
             transform.rotation = Quaternion.Lerp(startRotation, targetRotation, alpha*1.1f);
 
@@ -65,6 +69,7 @@ public class Move : MonoBehaviour
 
     private void Start()
     {
+        //grid snap
         TeleportToPosition(transform.position);
     }
 }

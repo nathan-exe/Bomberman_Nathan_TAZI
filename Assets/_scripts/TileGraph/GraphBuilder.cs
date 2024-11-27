@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 /// <summary>
-/// ce Monobehaviour permet de générer le graph rapidement dans Unity.
+/// ce Monobehaviour permet de générer le graph de pathfinding rapidement dans Unity.
 /// </summary>
 public class GraphBuilder : MonoBehaviour
 {
@@ -21,27 +21,27 @@ public class GraphBuilder : MonoBehaviour
     {
         _graph.Nodes.Clear();
 
-        //destroy all children
+        //detruit tous les noeuds précédents
         int c = transform.childCount;
         for(int i =0; i < c; i++)
         {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }
 
-        //iterate over Tilemap Area
+        //itere sur toutes les tiles de la zone de jeu définie
         for (int x = _offset.x; x < _size.x + _offset.x; x++)
         {
             for (int y= _offset.y; y < _size.y+ _offset.y; y++)
             {
                 bool collision = Physics2D.OverlapPoint(new Vector2(x, y), LayerMask.GetMask(solidLayer)); //le node sera desactivé si il y'avait un objet sur la case avant qu'il ne spawn
 
-                //Debug.DrawRay(new Vector2(x, y), Vector2.up * 0.2f, Color.red, 1);
-                NodeContainer mb = Instantiate(_nodePrefab, new Vector2(x, y), Quaternion.identity, transform);
-                TileAstarNode newNode = mb.node;
-                newNode.monoBehaviour = mb;
+                NodeContainer newObject = Instantiate(_nodePrefab, new Vector2(x, y), Quaternion.identity, transform);
+                TileAstarNode newNode = newObject.node;
+                newNode.monoBehaviour = newObject;
 
                 newNode.monoBehaviour.gameObject.name = $"Node({x},{y})";
-                _graph.Nodes.Add(new Vector2Int(x, y), newNode); //add nodes to free tiles
+                _graph.Nodes.Add(new Vector2Int(x, y), newNode);
+                if(!collision) _graph.FreeNodes.Add(newNode);
 
                 newNode.monoBehaviour.gameObject.SetActive(!collision);
             }

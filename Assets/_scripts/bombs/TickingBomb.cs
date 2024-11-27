@@ -4,10 +4,10 @@ using Unity.Collections;
 using UnityEngine;
 
 /// <summary>
-/// la bombe après qu'elle ait été posée par terre par le joueur ou le bot,
+/// ce script est attaché à la bombe après qu'elle ait été posée par terre par le joueur ou le bot,
 /// elle est dangereuse et explose au bout d'un certain temps
 /// </summary>
-public class Bomb : MonoBehaviour
+public class TickingBomb : MonoBehaviour
 {
     [SerializeField] GameObject _explosionVisual;
 
@@ -20,14 +20,19 @@ public class Bomb : MonoBehaviour
         TryGetComponent<PooledObject>(out _asPooledObject);
     }
 
+    //equivalent de void start()
     public void OnPulledFromPool()
     {
         _explosionVisual.SetActive(false);
 
-        Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
+        Graph.Instance.DisableNode(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
         StartCoroutine(ExplodeWithDelay());
     }
 
+    /// <summary>
+    /// attend un peu puis explose
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ExplodeWithDelay()
     {
         yield return new WaitForSeconds(1.5f);
@@ -38,7 +43,7 @@ public class Bomb : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         _explosionVisual.SetActive(false);
 
-        Graph.Instance.AddNodeToGraph(transform.position.RoundToV2Int());
+        Graph.Instance.ActivateNodeAtPosition(transform.position.RoundToV2Int());
         GetComponent<PooledObject>().GoBackIntoPool();
     }
 

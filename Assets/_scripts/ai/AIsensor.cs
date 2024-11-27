@@ -97,7 +97,7 @@ public class AiSensor : MonoBehaviour
         int c = 0;
         foreach(Collider2D col in Physics2D.OverlapCircleAll(point.Round(), 3, LayerMask.GetMask("Solid")))
         {
-            if (col.GetComponent<Bomb>()) c++;
+            if (col.GetComponent<TickingBomb>()) c++;
         }
         return c;
     }
@@ -106,20 +106,20 @@ public class AiSensor : MonoBehaviour
     /// retourne la liste des bombes pouvant potentiellement faire des degats au bot si il est sur le point donné
     /// </summary>
     /// <returns></returns>
-    public List<Bomb> FindTickingBombsAroundPoint(Vector2 point)
+    public List<TickingBomb> FindTickingBombsAroundPoint(Vector2 point)
     {
-        List<Bomb> output = new();
+        List<TickingBomb> output = new();
 
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
             RaycastHit2D hit = Physics2D.Raycast(point.Round() + (Vector2)offset * 0.51f, offset, 3, ~LayerMask.GetMask(Graph.NodeLayer));
-            if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) output.Add(bomb);
+            if (hit && hit.collider.gameObject.TryGetComponent<TickingBomb>(out TickingBomb bomb)) output.Add(bomb);
         }
 
         return output;
     }
 
-    public void FindTickingBombsAroundPoint_NoAlloc(Vector2 point,ref List<Bomb> output)
+    public void FindTickingBombsAroundPoint_NoAlloc(Vector2 point,ref List<TickingBomb> output)
     {
         output.Clear();
 
@@ -127,7 +127,7 @@ public class AiSensor : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(point , offset, 3, LayerMask.GetMask("Solid"));
 
-            if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) output.Add(bomb);
+            if (hit && hit.collider.gameObject.TryGetComponent<TickingBomb>(out TickingBomb bomb)) output.Add(bomb);
         }
     }
     
@@ -141,7 +141,7 @@ public class AiSensor : MonoBehaviour
         foreach (Vector2Int offset in VectorExtensions.AllFourDirections)
         {
             RaycastHit2D hit = Physics2D.Raycast(point.Round(), offset, 3, LayerMask.GetMask("Solid"));
-            if (hit && hit.collider.gameObject.TryGetComponent<Bomb>(out Bomb bomb)) return false;
+            if (hit && hit.collider.gameObject.TryGetComponent<TickingBomb>(out TickingBomb bomb)) return false;
         }
         return true;
     }

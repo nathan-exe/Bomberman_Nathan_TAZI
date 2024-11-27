@@ -5,13 +5,17 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-public class GOAP : MonoBehaviour
+/// <summary>
+/// goal oriented action planning
+/// </summary>
+public class GoapEngine : MonoBehaviour
 {
 
-    [SerializeField] StateMachine stateMachine;
-    [SerializeField] AiSensor sensor;
-    [SerializeField] Astar astar;
+    [SerializeField] private StateMachine stateMachine;
+    [SerializeField] private AiSensor sensor;
+    [SerializeField] private Astar astar;
 
+    //nodes
     public goapAstarNode CollectingBombs, FleeingBombs, ChasingPlayer, Win, Death;
 
     [Header("Visuals")]
@@ -19,8 +23,6 @@ public class GOAP : MonoBehaviour
     [SerializeField] GoapNodeVisualizer Visu_FleeingBombs, Visu_ChasingPlayer, Visu_Win, Visu_Death;
 
     public goapAstarNode  CurrentNode { get; private set; }
-
-    [SerializeField] GameContext testCTX;
 
     private void Start()
     {
@@ -40,7 +42,6 @@ public class GOAP : MonoBehaviour
         sensor.OnPlayerHealthUpdated += OnContextChanged;
         sensor.OnAgentMoved += OnContextChanged;
         sensor.OnPlayerMoved += OnContextChanged;
-        //onBombExploded
     }
 
     void OnContextChanged()
@@ -48,6 +49,10 @@ public class GOAP : MonoBehaviour
         chooseBestAction();
     }
 
+    /// <summary>
+    /// choisit la meilleure action à faire en fonction du contexte du jeu, 
+    /// et fais transitionner la state machine vers l'etat correspondant.
+    /// </summary>
     void chooseBestAction()
     {
         Stack<AstarNode> path = FindBestPath();
@@ -59,6 +64,9 @@ public class GOAP : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// instantie tous les noeuds du graph
+    /// </summary>
     void InstantiateNodes()
     {
         CollectingBombs = new(stateMachine.S_CollectingBombs, this,Visu_CollectingBombs);
@@ -67,6 +75,10 @@ public class GOAP : MonoBehaviour
         Death = new(stateMachine.S_Dead, this,Visu_Death);
         Win = new(stateMachine.S_Win, this,Visu_Win);
     }
+
+    /// <summary>
+    /// relie tous les noeuds du graph entre eux
+    /// </summary>
     void LinkNodes()
     {
         CollectingBombs.Neighbours = new List<AstarNode>() { FleeingBombs,ChasingPlayer,Death,Win };
@@ -75,6 +87,10 @@ public class GOAP : MonoBehaviour
         Win.Neighbours = new List<AstarNode>() {};
         Death.Neighbours = new List<AstarNode>() {};
     }
+
+    /// <summary>
+    /// reset tous les noeuds
+    /// </summary>
     void ResetAllNodes()
     {
         CollectingBombs.resetNode();
@@ -84,6 +100,10 @@ public class GOAP : MonoBehaviour
         Win.resetNode();
     }
 
+    /// <summary>
+    /// retourne le contexte actuel du jeu
+    /// </summary>
+    /// <returns></returns>
     public GameContext GetCurrentGameContext()
     {
         GameContext ctx = new();
@@ -102,25 +122,22 @@ public class GOAP : MonoBehaviour
         ResetAllNodes();
         CurrentNode.UpdateSimulatedOutcome();
 
-        //CurrentNode.SimulatedOutcomeContext = testCTX;//test
-
-        //print(CurrentNode.State.GetType() +  "/ hp :" + CurrentNode.SimulatedOutcomeContext.AgentHp.ToString()) ;
         Stack<AstarNode> path = astar.ComputePath(CurrentNode, Win);
-        if(path.Count>0) ((goapAstarNode)path.ToArray()[path.Count - 1]).Visu.SetRed();
-        //foreach (AstarNode node in path) print(((goapAstarNode)node).State.GetType());
+        if(path.Count>0) ((goapAstarNode)path.ToArray()[path.Count - 1]).Visualizer.SetRed();
+        
         return path;
     }
 }
 
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(GOAP))]
+[CustomEditor(typeof(GoapEngine))]
 class GOAPeditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        GOAP t = (GOAP)target;
+        GoapEngine t = (GoapEngine)target;
         if (GUILayout.Button("Test")) t.FindBestPath();
     }
 }

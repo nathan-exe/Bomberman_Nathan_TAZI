@@ -13,14 +13,13 @@ public class State_Dead : StateBase
     }
     public override GameContext SimulateOutcomeContext(GameContext precedentContext)
     {
-        return precedentContext;
+        return precedentContext; 
     }
 
     public override void OnEntered()
     {
         Time.timeScale = 0;
         GameOver.Instance.triggerPlayerWin();
-
     }
 
     public override void OnExited()

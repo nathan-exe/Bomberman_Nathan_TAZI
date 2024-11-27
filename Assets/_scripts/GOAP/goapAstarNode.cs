@@ -4,28 +4,28 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
+
 [Serializable]
 public class goapAstarNode : AstarNode
 {
-    public StateBase State;
-    public GOAP engine;
+    [HideInInspector] public StateBase State;
+    [HideInInspector] public GoapEngine Engine;
     public GameContext SimulatedOutcomeContext;
-    public GoapNodeVisualizer Visu;
+    public GoapNodeVisualizer Visualizer;
 
-    public goapAstarNode(StateBase state, GOAP goap, GoapNodeVisualizer visu)
+    public goapAstarNode(StateBase state, GoapEngine goap, GoapNodeVisualizer visu)
     {
         State = state;
-        this.engine = goap;
+        this.Engine = goap;
 
-        Visu = visu;
+        Visualizer = visu;
         visu.Node = this;
 
         OnBeforeActivationCheck += UpdateSimulatedOutcome;
-        //OnBeforeActivationCheck += ;
     }
+
     public override bool isActive()
     {
-        //si le contexte simulé du noeud précédent ne permet pas de rentrer dans ce noeud-ci, alors le cout est infini
         if (previousNode == null) { return State.CanBeEnteredFromContext(SimulatedOutcomeContext); }
         return State.CanBeEnteredFromContext(((goapAstarNode)previousNode).SimulatedOutcomeContext) ;
     }
@@ -47,11 +47,9 @@ public class goapAstarNode : AstarNode
         else
         {
             //le noeud de départ récupère le vrai contexte du jeu
-            SimulatedOutcomeContext = /*State.SimulateOutcomeContext(*/engine.GetCurrentGameContext();//); 
-            //Debug.Log("inside : " +State.GetType() + "/ hp :" + SimulatedOutcomeContext.AgentHp.ToString());
-
+            SimulatedOutcomeContext = Engine.GetCurrentGameContext();
         }
-        Visu.UpdateUI();
+        Visualizer.UpdateUI();
     }
 
 }

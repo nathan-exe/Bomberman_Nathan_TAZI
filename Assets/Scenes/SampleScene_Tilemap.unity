@@ -24616,7 +24616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 219637497342629178, guid: 72b42052152c5554694c453b9df51a05, type: 3}
-  _poolSize: 10
+  _poolSize: 30
 --- !u!4 &297217139
 Transform:
   m_ObjectHideFlags: 0
@@ -68638,144 +68638,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1000278373 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1135380099406932707, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-  m_PrefabInstance: {fileID: 4342477861355085148}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1000278395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000278373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade7817f1917d1e44bde9311d131aa7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachine: {fileID: 1000278404}
-  sensor: {fileID: 1000278402}
-  astar: {fileID: 1000278407}
-  CollectingBombs:
-    VisitedState: 0
-    g: 0
-    engine: {fileID: 0}
-    SimulatedOutcomeContext:
-      AgentHp: 0
-      PlayerHp: 0
-      AgentBombCount: 0
-      PlayerBombCount: 0
-      DangerousBombsAroundAgent: 0
-      DangerousBombsAroundPlayer: 0
-    Visu: {fileID: 0}
-  FleeingBombs:
-    VisitedState: 0
-    g: 0
-    engine: {fileID: 0}
-    SimulatedOutcomeContext:
-      AgentHp: 0
-      PlayerHp: 0
-      AgentBombCount: 0
-      PlayerBombCount: 0
-      DangerousBombsAroundAgent: 0
-      DangerousBombsAroundPlayer: 0
-    Visu: {fileID: 0}
-  ChasingPlayer:
-    VisitedState: 0
-    g: 0
-    engine: {fileID: 0}
-    SimulatedOutcomeContext:
-      AgentHp: 0
-      PlayerHp: 0
-      AgentBombCount: 0
-      PlayerBombCount: 0
-      DangerousBombsAroundAgent: 0
-      DangerousBombsAroundPlayer: 0
-    Visu: {fileID: 0}
-  Win:
-    VisitedState: 0
-    g: 0
-    engine: {fileID: 0}
-    SimulatedOutcomeContext:
-      AgentHp: 0
-      PlayerHp: 0
-      AgentBombCount: 0
-      PlayerBombCount: 0
-      DangerousBombsAroundAgent: 0
-      DangerousBombsAroundPlayer: 0
-    Visu: {fileID: 0}
-  Death:
-    VisitedState: 0
-    g: 0
-    engine: {fileID: 0}
-    SimulatedOutcomeContext:
-      AgentHp: 0
-      PlayerHp: 0
-      AgentBombCount: 0
-      PlayerBombCount: 0
-      DangerousBombsAroundAgent: 0
-      DangerousBombsAroundPlayer: 0
-    Visu: {fileID: 0}
-  Visu_CollectingBombs: {fileID: 1318354425}
-  Visu_FleeingBombs: {fileID: 7323050233039732442}
-  Visu_ChasingPlayer: {fileID: 1331135295}
-  Visu_Win: {fileID: 1516441522}
-  Visu_Death: {fileID: 1518545202}
-  testCTX:
-    AgentHp: 0
-    PlayerHp: 0
-    AgentBombCount: 0
-    PlayerBombCount: 0
-    DangerousBombsAroundAgent: 0
-    DangerousBombsAroundPlayer: 0
---- !u!114 &1000278402 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9196103189294640979, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-  m_PrefabInstance: {fileID: 4342477861355085148}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000278373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8f6379f322ae9b4aa6441fc660b5e00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1000278404 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7604890770346465802, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-  m_PrefabInstance: {fileID: 4342477861355085148}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000278373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7547cb2aa5346d243bf728cf42d5a570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1000278407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000278373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a926f267aa6bc7a40a115d0a77b639ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _graph: {fileID: 0}
---- !u!114 &1000278411 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 245740932397109843, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-  m_PrefabInstance: {fileID: 4342477861355085148}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000278373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6444dcb3482ba742a41491e07338982, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1000968200
 GameObject:
   m_ObjectHideFlags: 0
@@ -71286,7 +71148,7 @@ GameObject:
   - component: {fileID: 1030096947}
   - component: {fileID: 1030096946}
   m_Layer: 0
-  m_Name: Square
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132129,7 +131991,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 908.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1903840974
 MonoBehaviour:
@@ -132185,8 +132047,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -145511,10 +145373,6 @@ PrefabInstance:
       propertyPath: _pathfinder
       value: 
       objectReference: {fileID: 176436543}
-    - target: {fileID: 3811672991364141419, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-      propertyPath: _moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4125116894358864481, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -145535,14 +145393,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7604890770346465802, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9196103189294640979, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-      propertyPath: _agentHealth
+    - target: {fileID: 6904736723048099600, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
+      propertyPath: Visu_Win
       value: 
-      objectReference: {fileID: 1000278411}
+      objectReference: {fileID: 1516441522}
+    - target: {fileID: 6904736723048099600, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
+      propertyPath: Visu_Death
+      value: 
+      objectReference: {fileID: 1518545202}
+    - target: {fileID: 6904736723048099600, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
+      propertyPath: Visu_FleeingBombs
+      value: 
+      objectReference: {fileID: 7323050233039732442}
+    - target: {fileID: 6904736723048099600, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
+      propertyPath: Visu_ChasingPlayer
+      value: 
+      objectReference: {fileID: 1331135295}
+    - target: {fileID: 6904736723048099600, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
+      propertyPath: Visu_CollectingBombs
+      value: 
+      objectReference: {fileID: 1318354425}
     - target: {fileID: 9196103189294640979, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
       propertyPath: _playerHealth
       value: 
@@ -145555,20 +145425,10 @@ PrefabInstance:
       propertyPath: _playerMovement
       value: 
       objectReference: {fileID: 5726436509860013324}
-    - target: {fileID: 9196103189294640979, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-      propertyPath: _playerHPcomponent
-      value: 
-      objectReference: {fileID: 5726436509860013319}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1135380099406932707, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1000278395}
-    - targetCorrespondingSourceObject: {fileID: 1135380099406932707, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1000278407}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 112455bac16c26d46ae8958a59582acd, type: 3}
 --- !u!1001 &5726436509860013318
 PrefabInstance:
@@ -146066,9 +145926,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 5726436509860013318}
   - {fileID: 4342477861355085148}
-  - {fileID: 1438981339}
   - {fileID: 119625015}
   - {fileID: 126960981}
   - {fileID: 738769618}
   - {fileID: 1079368180}
   - {fileID: 1030096947}
+  - {fileID: 1438981339}
