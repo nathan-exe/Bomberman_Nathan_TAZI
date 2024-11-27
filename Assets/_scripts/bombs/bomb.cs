@@ -22,8 +22,6 @@ public class Bomb : MonoBehaviour
     public void OnPulledFromPool()
     {
         _explosionVisual.SetActive(false);
-        print("--");
-        print(transform.position.RoundToV2Int());
         Graph.Instance.RemoveNodeFromGraph(Graph.Instance.Nodes[transform.position.RoundToV2Int()]);
 
         StartCoroutine(ExplodeWithDelay());
